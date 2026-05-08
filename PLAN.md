@@ -442,6 +442,20 @@ rm -rf android-cli build camera jetpack-compose navigation performance play syst
 - Upstream skill refresh remains possible without permanently storing the old root skill layout.
 - Codex packaging files have a stable place in the repository.
 
+**Status (2026-05-08):** Implemented as an intermediate migration-safe refresh because
+`plugins/` and `scripts/sync-codex-plugins.sh` do not exist yet. The workflow now deletes only
+legacy root skill directories, extracts upstream sources into `$RUNNER_TEMP`, copies only known
+legacy skill directories back into the root mirror, and verifies tracked protected Codex packaging
+paths still exist when present. `docs/codex-marketplace-install.md` now documents that root skill
+directories are temporary migration inputs only and that the final release layout must not keep
+duplicate legacy root directories. Official OpenAI docs were re-checked via OpenAI docs MCP for
+repo marketplace path, plugin path, policy fields, CLI `marketplace add --ref`, sparse paths, and
+upgrade behavior. SocratiCode MCP was available with a green index; dependency graph data is empty
+for this Markdown/YAML-heavy repository, so SocratiCode semantic search plus exact local tools were
+used. Validation run: YAML parsed with Ruby, no broad top-level deletion/copy patterns remained,
+the legacy-only cleanup and `$RUNNER_TEMP` usage were present, the install doc existed, required
+legacy/final-layout wording was present, and forbidden official-publication wording was absent.
+
 ---
 
 ### Milestone 1: Add marketplace and plugin skeletons
@@ -477,6 +491,13 @@ jq . plugins/android-xr-glimmer/.codex-plugin/plugin.json
 - All JSON files parse successfully.
 - Every marketplace entry has `name`, `source`, `policy.installation`, `policy.authentication`, and `category`.
 - Every plugin has `.codex-plugin/plugin.json`.
+
+**Status (2026-05-08):** Implemented. Added `.agents/plugins/marketplace.json`
+and four plugin manifests under `plugins/*/.codex-plugin/plugin.json` exactly in the planned
+skills-only `v0.0.4` shape. No `.app.json`, `.mcp.json`, hooks, or `skills/` payloads were added in
+this milestone. Validation run: `jq .` succeeded for the marketplace and all four plugin manifests,
+and `find plugins -path '*/.codex-plugin/*' -type f | sort` returned only the four `plugin.json`
+files.
 
 ---
 
@@ -562,6 +583,17 @@ rg -n "^name: android-cli-base$" plugins/android-cli-tools/skills/android-cli-ba
 - `rg -n "^name: base$" plugins` returns no matches.
 - `android-cli-base` frontmatter exists in the packaged copy.
 
+**Status (2026-05-08):** Implemented. Added executable `scripts/sync-codex-plugins.sh`,
+ran it with the default source root, then reran it with explicit
+`SOURCE_ROOT=/Users/igor/AndroidStudioProjects/android-skils-codex-plugin` to verify the future
+temporary-source path behavior. Packaged all 9 skills under `plugins/*/skills/`, preserved all 80
+reference files, and renamed only the packaged Android CLI skill frontmatter from `base` to
+`android-cli-base` with the planned trigger-focused description. Validation run: `bash -n
+scripts/sync-codex-plugins.sh` passed; `find plugins -name SKILL.md | sort` returned 9 packaged
+skills; `find plugins -path '*/references/*' -type f | wc -l` returned `80`; `rg -n "^name: base$"
+plugins` returned no matches with expected exit code 1; and `rg -n "^name: android-cli-base$"
+plugins/android-cli-tools/skills/android-cli-base/SKILL.md` returned line 2.
+
 ---
 
 ### Milestone 3: Fix release-blocking skill metadata and markdown quality
@@ -593,16 +625,32 @@ rg -n "^name: android-cli-base$" plugins/android-cli-tools/skills/android-cli-ba
 **Validation commands:**
 
 ```bash
-rg -n "^---$|^name:|^description:" plugins -g SKILL.md
-rg -n -- "- \\[\\]" plugins -g SKILL.md
-rg -n "TODO|TBD|FIXME" plugins .agents README.md docs || true
+rg -n -g SKILL.md "^---$|^name:|^description:" plugins
+rg -n -g SKILL.md -F -- "- \\[\\]" plugins
+rg -n -g SKILL.md -F -- "  - \\[ \\] Step 4" plugins
+rg -n -g SKILL.md "TODO|TBD|FIXME" plugins || true
+rg -n "TODO|TBD|FIXME" .agents README.md docs || true
+rg -n "TODO|TBD|FIXME" plugins/*/skills/*/references || true
 ```
 
 **Expected validation:**
 
 - Every packaged skill has `name` and `description`.
 - No malformed checklist item remains in packaged skills.
-- No release-facing placeholder markers are present in `plugins/`, `.agents/`, `README.md`, or `docs/`.
+- No release-facing placeholder markers are present in packaged `SKILL.md`, `.agents/`,
+  `README.md`, or `docs/`. Upstream reference files may contain source TODO comments; preserve
+  those as reference content unless a later milestone explicitly changes upstream references.
+
+**Status (2026-05-08):** Implemented. `android-cli-base` already had the packaged `name` and
+trigger-focused Android CLI description from Milestone 2. Fixed `r8-analyzer` Step 4 indentation,
+front-loaded its description with `R8/ProGuard keep rules`, normalized `edge-to-edge` checklist
+items, and front-loaded its description with `edge-to-edge Compose insets`. Added post-copy
+normalization to `scripts/sync-codex-plugins.sh` so these packaged release fixes survive future
+syncs from legacy or temporary upstream sources. Validation run: `scripts/sync-codex-plugins.sh`
+and `bash -n scripts/sync-codex-plugins.sh` passed; all packaged skills expose frontmatter `name`
+and `description`; malformed escaped checklist checks returned no matches; packaged `SKILL.md`,
+`.agents`, `README.md`, and `docs` had no `TODO|TBD|FIXME` matches; the broader reference scan
+still reports expected TODO comments copied from upstream reference/source snippets.
 
 ---
 
@@ -700,6 +748,21 @@ scripts/validate-codex-plugins.sh
 - CI fails if any plugin manifest is missing or malformed.
 - CI fails if packaged skill count is not 9.
 - CI fails if marketplace source paths do not point under `./plugins/`.
+
+**Status (2026-05-08):** Implemented. Added executable
+`scripts/validate-codex-plugins.sh` and expanded the baseline validation to cover marketplace
+entry shape, local `./plugins/` source paths, `.codex-plugin/` containing only `plugin.json`, skills
+directory presence, manifest fields, packaged skill count, reference count, frontmatter
+`name`/`description`, `android-cli-base`, malformed checklist patterns, release-facing placeholder
+markers, and packaged trigger phrase coverage. `update-skills.yml` now keeps a combined
+`$RUNNER_TEMP/android-skills-upstream` source, overlays `github-skills`, refreshes legacy root
+directories as the current intermediate migration input, then runs
+`SOURCE_ROOT="$RUNNER_TEMP/android-skills-upstream" scripts/sync-codex-plugins.sh` and
+`scripts/validate-codex-plugins.sh` before committing. `create-release.yml` now runs validation
+before archiving. Both workflows install `jq` only if it is missing. Validation run:
+`bash -n scripts/validate-codex-plugins.sh`, `bash -n scripts/sync-codex-plugins.sh`, YAML parsing
+for both workflows, `scripts/validate-codex-plugins.sh`, `scripts/sync-codex-plugins.sh`, a second
+`scripts/validate-codex-plugins.sh`, and `git diff --check` all passed.
 
 ---
 

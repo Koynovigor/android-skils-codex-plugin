@@ -19,45 +19,76 @@ jobs:
           ref: main
           token: ${{ secrets.ADR_GITHUB_BOT_PAT }}
 
-      - name: Delete existing non-hidden directories
+      - name: Install validation dependencies
         run: |
-          # Cleans up existing folders so we don't have stale files
-          find . -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec rm -rf {} +
-
-      - name: Download and Extract dac_skills
-        run: |
-          curl -L -O https://dl.google.com/dac/dac_skills.zip
-          mkdir temp_extract
-          unzip -o dac_skills.zip -d temp_extract
-          # Only copy directories from the root of the zip, ignoring files in the root
-          if ls -d temp_extract/[!.]*/ >/dev/null 2>&1; then
-            cp -r temp_extract/[!.]*/ .
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y jq
           fi
-          rm -rf temp_extract dac_skills.zip
 
-      - name: Copy contents of github-skills branch
+      - name: Download and extract dac_skills
         run: |
-          git fetch origin github-skills:github-skills
+          source_root="$RUNNER_TEMP/android-skills-upstream"
+          zip_path="$RUNNER_TEMP/dac_skills.zip"
+          rm -rf "$source_root"
+          mkdir -p "$source_root"
 
-          # 2. Create a temporary directory to hold the skills files
-          mkdir temp_skills
+          curl -L -o "$zip_path" https://dl.google.com/dac/dac_skills.zip
+          unzip -o "$zip_path" -d "$source_root"
+          rm -f "$zip_path"
 
-          # 3. Use 'git archive' to "export" the folders from that branch 
-          # and extract them into our temp folder. This avoids index errors.
-          git archive github-skills | tar -x -C temp_skills
+      - name: Overlay github-skills branch
+        run: |
+          git fetch origin github-skills
 
-          # 4. Move the contents into the root directory
-          # This will overwrite any existing folders with the same name
-          if ls -d temp_skills/[!.]*/ >/dev/null 2>&1; then
-            cp -r temp_skills/[!.]*/ .
-            echo "Successfully moved non-hidden directories from github-skills."
-          else
-            echo "No non-hidden directories found to copy."
-          fi
-          
-          # 5. Clean up the temp folder
-          rm -rf temp_skills
-          echo "Successfully copied directories from github-skills branch."
+          upstream_root="$RUNNER_TEMP/android-skills-upstream"
+          source_root="$RUNNER_TEMP/github-skills"
+          rm -rf "$source_root"
+          mkdir -p "$source_root"
+
+          # Export the branch into a temp folder. This avoids index errors.
+          git archive FETCH_HEAD | tar -x -C "$source_root"
+
+          for path in android-cli build camera jetpack-compose navigation performance play system xr; do
+            if [ -d "$source_root/$path" ]; then
+              rm -rf "$upstream_root/$path"
+              cp -R "$source_root/$path" "$upstream_root/$path"
+            fi
+          done
+
+          rm -rf "$source_root"
+          echo "Successfully overlaid legacy skill directories from github-skills branch."
+
+      - name: Refresh legacy root skill directories
+        run: |
+          source_root="$RUNNER_TEMP/android-skills-upstream"
+
+          # Keep Codex marketplace packaging paths intact during refreshes.
+          rm -rf android-cli build camera jetpack-compose navigation performance play system xr
+
+          for path in android-cli build camera jetpack-compose navigation performance play system xr; do
+            if [ -d "$source_root/$path" ]; then
+              cp -R "$source_root/$path" "$path"
+            fi
+          done
+
+      - name: Verify protected Codex packaging paths
+        run: |
+          test -d .github
+          test -f README.md
+          test -f LICENSE.txt
+
+          for path in .agents plugins scripts docs CHANGELOG.md; do
+            if git ls-files -- "$path" | grep -q .; then
+              test -e "$path"
+            fi
+          done
+
+      - name: Sync and validate Codex plugins
+        run: |
+          SOURCE_ROOT="$RUNNER_TEMP/android-skills-upstream" scripts/sync-codex-plugins.sh
+          scripts/validate-codex-plugins.sh
+          rm -rf "$RUNNER_TEMP/android-skills-upstream"
 
       - name: Commit and push changes
         run: |
