@@ -1,9 +1,9 @@
 ---
 name: edge-to-edge
-description: Use this skill to migrate your Jetpack Compose app to add adaptive edge-to-edge
-  support and troubleshoot common issues. Use this skill to fix UI components (like
-  buttons or lists) that are obscured by or overlapping with the navigation bar or
-  status bar, fix IME insets, and fix system bar legibility.
+description: edge-to-edge Compose insets migration for Jetpack Compose apps that need
+  adaptive edge-to-edge support and troubleshooting. Use this skill to fix UI
+  components obscured by or overlapping with the navigation bar or status bar, fix
+  IME insets, and fix system bar legibility.
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
@@ -420,6 +420,6 @@ Dialog(
 - \[ \] Does every `Activity` call `enableEdgeToEdge()`?
 - \[ \] Is `adjustResize` set in the `AndroidManifest.xml`?
 - \[ \] Does every `TextField`, `OutlinedTextField`, or `BasicTextField` have a parent with `imePadding()`, `fitInside`, `Modifier.safeDrawingPadding()`, `Modifier.safeContentPadding()`, `Modifier.safeGesturesPadding()`, or `contentWindowInsets` set to `WindowInsets.safeDrawing` or `WindowInsets.ime`?
-- \[\] Does the first and last list item draw away from the system bars by passing insets to `contentPadding`?
-- \[\] Do FABs draw above the navigation bars by either being inside a Scaffold or by applying `Modifier.safeDrawingPadding()`?
-- \[\] Does the project build? Run `./gradlew build` to be sure.
+- \[ \] Does the first and last list item draw away from the system bars by passing insets to `contentPadding`?
+- \[ \] Do FABs draw above the navigation bars by either being inside a Scaffold or by applying `Modifier.safeDrawingPadding()`?
+- \[ \] Does the project build? Run `./gradlew build` to be sure.

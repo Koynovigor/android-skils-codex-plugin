@@ -1,6 +1,6 @@
 ---
-name: base
-description: Orchestrates Android development tasks
+name: android-cli-base
+description: Use this skill for Android CLI workflows including project creation, SDK management, emulator management, device interaction, screenshots, layout inspection, Android documentation lookup, and Android CLI diagnostics.
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC

@@ -1,0 +1,31 @@
+{
+  "name": "android-cli-tools",
+  "version": "0.0.4",
+  "description": "Reusable Android CLI workflows for Codex.",
+  "author": {
+    "name": "Koynovigor",
+    "url": "https://github.com/Koynovigor"
+  },
+  "homepage": "https://github.com/Koynovigor/android-skils-codex-plugin/blob/main/docs/codex-marketplace-install.md",
+  "repository": "https://github.com/Koynovigor/android-skils-codex-plugin",
+  "license": "Apache-2.0",
+  "keywords": ["android", "android-cli", "sdk", "emulator", "developer-tools"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Android CLI Tools",
+    "shortDescription": "Android CLI workflows for Codex",
+    "longDescription": "Use Android CLI commands for project creation, SDK management, emulator work, device interaction, screenshots, layout inspection, and Android documentation lookup.",
+    "developerName": "Koynovigor",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/Koynovigor/android-skils-codex-plugin",
+    "defaultPrompt": [
+      "Use Android CLI to inspect this project.",
+      "Use Android CLI to check connected devices.",
+      "Use Android CLI to search Android docs."
+    ],
+    "brandColor": "#3DDC84",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
