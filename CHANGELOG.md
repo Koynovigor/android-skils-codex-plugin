@@ -10,7 +10,7 @@ Initial public Codex marketplace release.
 
 - Repository release tag: `v0.0.4`.
 - Plugin manifest version for all bundled plugins: `0.0.4`.
-- `main` is the rolling stable channel; use `codex plugin marketplace upgrade android-skills-codex` to refresh a `main` install.
+- `latest` is the moving stable release ref; use `codex plugin marketplace upgrade android-skills-codex` to refresh a `latest` install.
 - Release tags such as `v0.0.4` are pinned channels; change the Git ref to move a pinned install to a newer release.
 
 ### Changed Plugins And Skills

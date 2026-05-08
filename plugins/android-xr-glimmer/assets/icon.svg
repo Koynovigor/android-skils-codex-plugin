@@ -1,19 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
-  <title>Android XR Glimmer</title>
-  <defs>
-    <linearGradient id="bg" x1="92" y1="420" x2="420" y2="92" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#201653"/>
-      <stop offset="1" stop-color="#B45CFF"/>
-    </linearGradient>
-    <linearGradient id="lens" x1="138" y1="190" x2="374" y2="322" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#F8FDFF"/>
-      <stop offset="1" stop-color="#BDEFFF"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <path d="M126 236C126 204 152 178 184 178H214C244 178 258 210 264 242C270 210 284 178 314 178H328C360 178 386 204 386 236V270C386 302 360 328 328 328H308C278 328 268 294 264 264C260 294 250 328 220 328H184C152 328 126 302 126 270V236Z" fill="#0B0824" opacity="0.72"/>
-  <path d="M148 236C148 216 164 200 184 200H212C234 200 246 230 252 254C246 284 234 306 220 306H184C164 306 148 290 148 270V236Z" fill="url(#lens)"/>
-  <path d="M276 254C282 230 294 200 316 200H328C348 200 364 216 364 236V270C364 290 348 306 328 306H308C294 306 282 284 276 254Z" fill="url(#lens)"/>
-  <path d="M250 254H278" fill="none" stroke="#F4E7FF" stroke-linecap="round" stroke-width="14"/>
-  <path d="M374 128L388 166L426 180L388 194L374 232L360 194L322 180L360 166L374 128Z" fill="#FFFFFF"/>
+    <title>Android XR Glimmer</title>
+    <defs>
+        <linearGradient id="bg" x1="92" y1="420" x2="420" y2="92" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#070912" />
+            <stop offset="0.58" stop-color="#111827" />
+            <stop offset="1" stop-color="#4C88E9" />
+        </linearGradient>
+        <linearGradient id="surface" x1="148" y1="200" x2="364" y2="306"
+            gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#33363D" />
+            <stop offset="1" stop-color="#181B22" />
+        </linearGradient>
+        <linearGradient id="primaryGlow" x1="142" y1="190" x2="370" y2="320"
+            gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#9BBFFF" />
+            <stop offset="0.54" stop-color="#63FEA8" />
+            <stop offset="1" stop-color="#9BBFFF" />
+        </linearGradient>
+        <filter id="softGlow" x="-25%" y="-35%" width="150%" height="170%"
+            color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feColorMatrix in="blur" type="matrix"
+                values="0 0 0 0 0.54 0 0 0 0 0.74 0 0 0 0 1 0 0 0 0.75 0" result="glow" />
+            <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    <rect width="512" height="512" rx="112" fill="url(#bg)" />
+    <path
+        d="M114 236C114 197 145 166 184 166H220C244 166 258 188 256 216C254 188 268 166 292 166H328C367 166 398 197 398 236V270C398 309 367 340 328 340H288C271 340 261 322 256 295C251 322 241 340 224 340H184C145 340 114 309 114 270V236Z"
+        fill="#05070E" opacity="0.78" />
+    <path
+        d="M146 238C146 216 164 198 186 198H218C240 198 252 225 252 253C252 281 240 308 218 308H186C164 308 146 290 146 268V238Z"
+        fill="url(#surface)" stroke="url(#primaryGlow)" stroke-width="5" filter="url(#softGlow)" />
+    <path
+        d="M366 238C366 216 348 198 326 198H294C272 198 260 225 260 253C260 281 272 308 294 308H326C348 308 366 290 366 268V238Z"
+        fill="url(#surface)" stroke="url(#primaryGlow)" stroke-width="5" filter="url(#softGlow)" />
+    <path d="M252 253H260" fill="none" stroke="#9BBFFF" stroke-linecap="round" stroke-width="10"
+        opacity="0.95" />
+    <rect x="174" y="226" width="48" height="13" rx="6.5" fill="#9BBFFF" opacity="0.92" />
+    <rect x="174" y="252" width="62" height="11" rx="5.5" fill="#606460" opacity="0.9" />
+    <rect x="174" y="275" width="36" height="11" rx="5.5" fill="#63FEA8" opacity="0.94" />
+    <rect x="290" y="226" width="48" height="13" rx="6.5" fill="#9BBFFF" opacity="0.92" />
+    <rect x="276" y="252" width="62" height="11" rx="5.5" fill="#606460" opacity="0.9" />
+    <rect x="302" y="275" width="36" height="11" rx="5.5" fill="#63FEA8" opacity="0.94" />
+    <path d="M374 118L387 154L423 167L387 180L374 216L361 180L325 167L361 154L374 118Z"
+        fill="#FFFFFF" opacity="0.96" />
 </svg>

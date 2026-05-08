@@ -37,35 +37,52 @@ find plugins -name SKILL.md | wc -l
 find plugins -path '*/references/*' -type f | wc -l
 ```
 
-Expected values for `v0.0.4` are 9 packaged skills and 80 packaged reference
-files.
+The current marketplace contains 9 packaged skills and 80 packaged reference
+files. If that package shape changes, update the validator, changelog, and
+release notes together.
 
 ## 3. Update Versions And Notes
 
+Use one release tag and derive the manifest version from it:
+
+```bash
+RELEASE_TAG=vX.Y.Z
+VERSION="${RELEASE_TAG#v}"
+```
+
 Before release:
 
-- Update all plugin manifest versions in `plugins/*/.codex-plugin/plugin.json`.
-- Keep all four plugin manifest versions equal to `0.0.4` for the first public
-  release.
-- Update `CHANGELOG.md` with changed plugins, bundled skills, and upgrade
-  guidance for the release.
-- Update the README release/version notes or the generated GitHub Release notes.
+- Update all plugin manifest versions in `plugins/*/.codex-plugin/plugin.json`
+  to `$VERSION`.
+- Update `CHANGELOG.md` under `$RELEASE_TAG` with changed plugins, bundled
+  skills, and upgrade guidance.
+- Keep public install docs version-agnostic: use `latest`, `<release-tag>`, and
+  `https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest`
+  instead of hard-coding a specific version.
 - Preserve Apache-2.0 licensing and existing skill metadata.
 - Do not add `.app.json`, `.mcp.json`, hooks, external authentication, or product
   gating unless the plan explicitly adds that scope.
 
+The release workflow uses GitHub-provided context instead of hard-coded
+repository or version text:
+
+- `${{ github.repository }}` / `$GITHUB_REPOSITORY` for the install source in
+  generated release notes.
+- `${{ inputs.tag_name }}` for the pinned release Git ref.
+- `${{ inputs.version }}` for plugin manifest version validation and release
+  notes.
+
 ## 4. Verify Upstream Alignment
 
-The first public release must stay aligned with the requested upstream
-`android/skills` release version, `v0.0.4`.
+Verify whether upstream `android/skills` has the same release tag:
 
 ```bash
-gh release view v0.0.4 --repo android/skills
+gh release view "$RELEASE_TAG" --repo android/skills
 ```
 
-If upstream `android/skills` does not have `v0.0.4` at release time, stop and
-decide whether this repository should keep `v0.0.4` by project decision or align
-to the actual upstream release.
+If upstream `android/skills` does not have that tag at release time, stop and
+decide whether this repository should keep the planned tag by project decision
+or align to the actual upstream release.
 
 ## 5. Publish From Main
 
@@ -74,33 +91,33 @@ Push the validated repository state to `main`.
 Run the `Create Release` GitHub workflow with:
 
 ```text
-tag_name: v0.0.4
-version: 0.0.4
-upstream_alignment: android/skills v0.0.4 verified before this release
+tag_name: <release-tag>
+version: <release-version-without-leading-v>
+upstream_alignment: android/skills <release-tag> verified before this release
 ```
 
 The workflow validates release input, plugin manifest versions, and marketplace
-shape, creates
-`android-skills-codex-marketplace.zip`, targets `main`, and writes release notes
-with the upstream alignment result, install commands, plugin list, update
-behavior, and artifact contents.
+shape, creates `android-skills-codex-marketplace.zip`, targets `main`, creates
+the GitHub Release, and then moves the `latest` Git ref to the released commit.
+Generated release notes include the upstream alignment result, install commands,
+plugin list, update behavior, and artifact contents.
 
 ## 6. Verify Install Channels
 
-Verify pinned install from the tag:
+Verify latest-release install:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref v0.0.4
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
 codex plugin marketplace upgrade android-skills-codex
 ```
 
 Then type `/plugins`, choose `Android Skills for Codex`, and verify the target
 plugin can be installed or enabled.
 
-Verify rolling-channel install from `main`:
+Verify pinned install from the release tag:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref main
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
 codex plugin marketplace upgrade android-skills-codex
 ```
 

@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name for the release (e.g., v0.0.4)'
+        description: 'Tag name for the release (for example, vX.Y.Z)'
         required: true
         type: string
       version:
-        description: 'Release version without the leading v (e.g., 0.0.4)'
+        description: 'Release version without the leading v (for example, X.Y.Z)'
         required: true
         type: string
       upstream_alignment:
@@ -82,10 +82,11 @@ jobs:
             README.md \
             CHANGELOG.md \
             LICENSE.txt \
-            docs/codex-marketplace-install.md
+            docs
 
       - name: Write release notes
         env:
+          REPOSITORY: ${{ github.repository }}
           TAG_NAME: ${{ inputs.tag_name }}
           VERSION: ${{ inputs.version }}
           UPSTREAM_ALIGNMENT: ${{ inputs.upstream_alignment }}
@@ -98,15 +99,15 @@ jobs:
             echo "Upstream android/skills alignment:"
             echo "- ${UPSTREAM_ALIGNMENT}"
             echo
-            echo "Install the rolling update channel:"
+            echo "Install the latest release channel:"
             echo '```bash'
-            echo "codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref main"
+            echo "codex plugin marketplace add ${REPOSITORY} --ref latest"
             echo "codex plugin marketplace upgrade android-skills-codex"
             echo '```'
             echo
             echo "Install this pinned release:"
             echo '```bash'
-            echo "codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref ${TAG_NAME}"
+            echo "codex plugin marketplace add ${REPOSITORY} --ref ${TAG_NAME}"
             echo '```'
             echo
             echo "Plugins:"
@@ -122,14 +123,14 @@ jobs:
             echo "- android-xr-glimmer ${VERSION}: display-ai-glasses-with-jetpack-compose-glimmer"
             echo
             echo "Update behavior:"
-            echo "- main is the rolling stable update channel."
+            echo "- latest is the moving stable release ref updated by this workflow."
             echo "- Git tags such as ${TAG_NAME} are pinned install channels."
-            echo "- If installed from main, CLI users only need codex plugin marketplace upgrade android-skills-codex."
+            echo "- If installed from latest, CLI users only need codex plugin marketplace upgrade android-skills-codex."
             echo "- If installed from ${TAG_NAME}, change the Git ref to move to a newer pinned release."
-            echo "- Codex App users can change the Git ref to move between main and a pinned tag."
+            echo "- Codex App users can change the Git ref to move between latest and a pinned tag."
             echo
             echo "Artifact:"
-            echo "- android-skills-codex-marketplace.zip contains .agents/plugins, plugins, scripts, README.md, CHANGELOG.md, LICENSE.txt, and docs/codex-marketplace-install.md."
+            echo "- android-skills-codex-marketplace.zip contains .agents/plugins, plugins, scripts, README.md, CHANGELOG.md, LICENSE.txt, and docs."
             echo
             echo "See CHANGELOG.md for the full release entry."
           } > release-notes.md
@@ -140,3 +141,7 @@ jobs:
           TAG_NAME: ${{ inputs.tag_name }}
         run: |
           gh release create "$TAG_NAME" android-skills-codex-marketplace.zip --title "Release $TAG_NAME" --notes-file release-notes.md --target main
+
+      - name: Update latest release ref
+        run: |
+          git push origin HEAD:latest --force

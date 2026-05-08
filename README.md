@@ -1,6 +1,6 @@
 # Android Skills for Codex
 
-[![Latest Release](https://img.shields.io/badge/release-v0.0.4-blue)](https://github.com/Koynovigor/android-skils-codex-plugin/releases/tag/v0.0.4)
+[![Latest Release](https://img.shields.io/github/v/release/Koynovigor/android-skils-codex-plugin?label=release)](https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE.txt)
 [![Create Release](https://github.com/Koynovigor/android-skils-codex-plugin/actions/workflows/create-release.yml/badge.svg)](https://github.com/Koynovigor/android-skils-codex-plugin/actions/workflows/create-release.yml)
 [![Codex Marketplace](https://img.shields.io/badge/Codex-marketplace-10A37F)](.agents/plugins/marketplace.json)
@@ -9,8 +9,8 @@ This repository packages Android Skills as a GitHub-backed marketplace for Codex
 App and Codex CLI. It exposes one marketplace, `android-skills-codex`, with four
 installable Codex plugins.
 
-The first public release is `v0.0.4`. It is a skills-only distribution: no apps,
-MCP servers, hooks, external authentication, logos, or product gating are included.
+Current releases are skills-only distributions: no apps, MCP servers, hooks,
+external authentication, logos, or product gating are included.
 
 > [!IMPORTANT]
 > This repository is not the official OpenAI Plugin Directory and does not claim
@@ -30,17 +30,17 @@ MCP servers, hooks, external authentication, logos, or product gating are includ
 
 ## Quick Install
 
-Install from `main` to track the rolling stable channel:
+Install from `latest` to track the latest GitHub release:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref main
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
 codex plugin marketplace upgrade android-skills-codex
 ```
 
-Install the first pinned release:
+Install a pinned release tag from [Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases):
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref v0.0.4
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
 ```
 
 Update an existing marketplace checkout:
@@ -69,7 +69,7 @@ Open Plugins, add a marketplace, and enter:
 | Field           | Value                                                |
 |-----------------|------------------------------------------------------|
 | Source          | `Koynovigor/android-skils-codex-plugin`              |
-| Git ref         | `main` for updates, or `v0.0.4` for a pinned install |
+| Git ref         | `latest` for updates, or a release tag for a pinned install |
 | Selective paths | `.agents/plugins` and `plugins`                      |
 
 Then choose `Android Skills for Codex`, install the plugin you need, and start a
@@ -77,12 +77,12 @@ new thread before using that plugin's skills.
 
 ## Plugin Catalog
 
-| Plugin                      | Version | Bundled skills                                                                               |
-|-----------------------------|--------:|----------------------------------------------------------------------------------------------|
-| `android-cli-tools`         | `0.0.4` | `android-cli-base`                                                                           |
-| `android-build-and-release` | `0.0.4` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `r8-analyzer`                       |
-| `android-ui-migration`      | `0.0.4` | `camera1-to-camerax`, `edge-to-edge`, `migrate-xml-views-to-jetpack-compose`, `navigation-3` |
-| `android-xr-glimmer`        | `0.0.4` | `display-ai-glasses-with-jetpack-compose-glimmer`                                            |
+| Plugin                      | Bundled skills                                                                               |
+|-----------------------------|----------------------------------------------------------------------------------------------|
+| `android-cli-tools`         | `android-cli-base`                                                                           |
+| `android-build-and-release` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `r8-analyzer`                       |
+| `android-ui-migration`      | `camera1-to-camerax`, `edge-to-edge`, `migrate-xml-views-to-jetpack-compose`, `navigation-3` |
+| `android-xr-glimmer`        | `display-ai-glasses-with-jetpack-compose-glimmer`                                            |
 
 | Skill                                             | Plugin                      | Purpose                                                                                                                                                    |
 |---------------------------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -98,8 +98,14 @@ new thread before using that plugin's skills.
 
 ## Update Behavior
 
-`main` is the rolling stable channel. Release tags such as `v0.0.4` are pinned
-channels for reproducible installs.
+`latest` is a moving Git ref updated by the release workflow after each GitHub
+Release. Use it when you want users to get the newest release with:
+
+```bash
+codex plugin marketplace upgrade android-skills-codex
+```
+
+Release tags are pinned channels for reproducible installs.
 
 Pinned refs do not auto-advance. To move from a pinned tag to a newer release,
 change the Git ref in Codex App or add the marketplace again with a newer `--ref`.
@@ -110,11 +116,11 @@ change the Git ref in Codex App or add the marketplace again with a newer `--ref
 - If the marketplace appears empty, include both `.agents/plugins` and `plugins`
   in selective paths.
 - If plugin changes are not visible, restart Codex and start a new thread.
-- If you installed from a pinned ref such as `v0.0.4`, updates do not move that
-  install to a newer tag automatically.
+- If you installed from a pinned release tag, updates do not move that install
+  to a newer tag automatically.
 - Local marketplace installs use the Codex plugin cache; run
   `codex plugin marketplace upgrade android-skills-codex` after local changes.
-- No external authentication is required in `v0.0.4`.
+- No external authentication is required for the current skills-only release.
 
 </details>
 
@@ -141,7 +147,7 @@ plugins/android-xr-glimmer
 CLI sparse checkout example:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref main --sparse .agents/plugins --sparse plugins
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest --sparse .agents/plugins --sparse plugins
 ```
 
 </details>
@@ -165,13 +171,15 @@ layout.
 
 ## Releases And Versioning
 
-- First public release: `v0.0.4`.
-- Plugin manifest versions: `0.0.4`.
+- The latest GitHub Release is available at
+  [releases/latest](https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest).
+- Plugin manifest versions are validated against the release workflow `version`
+  input.
 - Git tags are stable pinned channels.
-- `main` is the rolling stable channel.
+- `latest` is the moving stable release ref for normal installs.
+- `main` is the development branch used by the release workflow.
 - Release artifacts include `.agents/plugins/`, `plugins/`, `scripts/`,
-  `README.md`, `CHANGELOG.md`, `LICENSE.txt`, and
-  `docs/codex-marketplace-install.md`.
+  `README.md`, `CHANGELOG.md`, `LICENSE.txt`, and `docs/`.
 - See [CHANGELOG.md](CHANGELOG.md) for changed plugins, bundled skills, and
   upgrade guidance per release.
 

@@ -1,17 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
-  <title>Android CLI Tools</title>
-  <defs>
-    <linearGradient id="bg" x1="96" y1="416" x2="416" y2="96" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#10372A"/>
-      <stop offset="1" stop-color="#22A66A"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <rect x="104" y="132" width="304" height="248" rx="42" fill="#071712" opacity="0.86"/>
-  <rect x="104" y="132" width="304" height="248" rx="42" fill="none" stroke="#CBFFE1" stroke-opacity="0.45" stroke-width="6"/>
-  <path d="M158 222L214 256L158 290" fill="none" stroke="#DFFFF0" stroke-linecap="round" stroke-linejoin="round" stroke-width="30"/>
-  <path d="M244 302H344" fill="none" stroke="#8AF1B8" stroke-linecap="round" stroke-width="28"/>
-  <circle cx="154" cy="176" r="11" fill="#4BE08D"/>
-  <circle cx="192" cy="176" r="11" fill="#9AF4C1"/>
-  <circle cx="230" cy="176" r="11" fill="#DFFFF0"/>
+    <title>Android CLI Tools</title>
+    <defs>
+        <linearGradient id="bg" x1="96" y1="416" x2="416" y2="96" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#10372A" />
+            <stop offset="1" stop-color="#22A66A" />
+        </linearGradient>
+    </defs>
+    <rect width="512" height="512" rx="112" fill="url(#bg)" />
+    <rect x="104" y="132" width="304" height="248" rx="42" fill="#071712" opacity="0.86" />
+    <rect x="104" y="132" width="304" height="248" rx="42" fill="none" stroke="#CBFFE1"
+        stroke-opacity="0.45" stroke-width="6" />
+    <path d="M158 222L214 256L158 290" fill="none" stroke="#DFFFF0" stroke-linecap="round"
+        stroke-linejoin="round" stroke-width="30" />
+    <path d="M244 302H344" fill="none" stroke="#8AF1B8" stroke-linecap="round" stroke-width="28" />
+    <circle cx="154" cy="176" r="11" fill="#4BE08D" />
+    <circle cx="192" cy="176" r="11" fill="#9AF4C1" />
+    <circle cx="230" cy="176" r="11" fill="#DFFFF0" />
 </svg>

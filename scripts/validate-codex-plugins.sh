@@ -183,6 +183,15 @@ if [[ -n "$release_placeholders" ]]; then
   exit 1
 fi
 
+hardcoded_initial_version_refs="$(
+  grep -R -nE 'v0\.0\.4|0\.0\.4' "$ROOT/README.md" "$ROOT/docs" 2>/dev/null || true
+)"
+if [[ -n "$hardcoded_initial_version_refs" ]]; then
+  echo "Public docs must not hard-code the initial release version; use latest, <release-tag>, or GitHub release links:" >&2
+  echo "$hardcoded_initial_version_refs" >&2
+  exit 1
+fi
+
 grep_file "$ROOT/plugins/android-cli-tools/skills/android-cli-base/SKILL.md" \
   'Android CLI workflows' \
   "android-cli-base description must front-load Android CLI workflows"
