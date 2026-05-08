@@ -24,6 +24,8 @@
       "Add edge-to-edge support.",
       "Migrate this app to Navigation 3."
     ],
-    "brandColor": "#0F9D58"
+    "brandColor": "#0F9D58",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }

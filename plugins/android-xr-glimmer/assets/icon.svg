@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title>Android XR Glimmer</title>
+  <defs>
+    <linearGradient id="bg" x1="92" y1="420" x2="420" y2="92" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#201653"/>
+      <stop offset="1" stop-color="#B45CFF"/>
+    </linearGradient>
+    <linearGradient id="lens" x1="138" y1="190" x2="374" y2="322" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FDFF"/>
+      <stop offset="1" stop-color="#BDEFFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M126 236C126 204 152 178 184 178H214C244 178 258 210 264 242C270 210 284 178 314 178H328C360 178 386 204 386 236V270C386 302 360 328 328 328H308C278 328 268 294 264 264C260 294 250 328 220 328H184C152 328 126 302 126 270V236Z" fill="#0B0824" opacity="0.72"/>
+  <path d="M148 236C148 216 164 200 184 200H212C234 200 246 230 252 254C246 284 234 306 220 306H184C164 306 148 290 148 270V236Z" fill="url(#lens)"/>
+  <path d="M276 254C282 230 294 200 316 200H328C348 200 364 216 364 236V270C364 290 348 306 328 306H308C294 306 282 284 276 254Z" fill="url(#lens)"/>
+  <path d="M250 254H278" fill="none" stroke="#F4E7FF" stroke-linecap="round" stroke-width="14"/>
+  <path d="M374 128L388 166L426 180L388 194L374 232L360 194L322 180L360 166L374 128Z" fill="#FFFFFF"/>
+</svg>

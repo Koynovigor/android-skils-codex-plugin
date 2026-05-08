@@ -57,20 +57,7 @@ jobs:
           done
 
           rm -rf "$source_root"
-          echo "Successfully overlaid legacy skill directories from github-skills branch."
-
-      - name: Refresh legacy root skill directories
-        run: |
-          source_root="$RUNNER_TEMP/android-skills-upstream"
-
-          # Keep Codex marketplace packaging paths intact during refreshes.
-          rm -rf android-cli build camera jetpack-compose navigation performance play system xr
-
-          for path in android-cli build camera jetpack-compose navigation performance play system xr; do
-            if [ -d "$source_root/$path" ]; then
-              cp -R "$source_root/$path" "$path"
-            fi
-          done
+          echo "Successfully overlaid skill directories from github-skills branch into the temporary source root."
 
       - name: Verify protected Codex packaging paths
         run: |
@@ -94,7 +81,7 @@ jobs:
         run: |
           git config user.name "android-devrel-github-bot"
           git config user.email "android-devrel-github-bot@users.noreply.github.com"
-          git add -A
+          git add -A .agents/plugins plugins
           # The '|| true' ensures the workflow doesn't fail if there's nothing new
           git commit -m "Updates skills ($(date +'%Y-%m-%d %H:%M'))" || echo "No changes to commit"
           git push origin main

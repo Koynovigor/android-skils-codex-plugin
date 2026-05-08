@@ -2,7 +2,18 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SOURCE_ROOT="${SOURCE_ROOT:-$ROOT}"
+SOURCE_ROOT="${SOURCE_ROOT:-}"
+
+if [[ -z "$SOURCE_ROOT" ]]; then
+  echo "SOURCE_ROOT must point to an upstream Android Skills extraction." >&2
+  echo "Example: SOURCE_ROOT=/tmp/android-skills-upstream scripts/sync-codex-plugins.sh" >&2
+  exit 1
+fi
+
+if [[ ! -d "$SOURCE_ROOT" ]]; then
+  echo "SOURCE_ROOT does not exist or is not a directory: $SOURCE_ROOT" >&2
+  exit 1
+fi
 
 copy_skill() {
   local source_dir="$1"

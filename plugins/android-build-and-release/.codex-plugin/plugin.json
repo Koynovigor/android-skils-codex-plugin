@@ -24,6 +24,8 @@
       "Upgrade Play Billing Library.",
       "Analyze R8 keep rules."
     ],
-    "brandColor": "#4285F4"
+    "brandColor": "#4285F4",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }

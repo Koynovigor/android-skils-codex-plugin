@@ -4,7 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name for the release (e.g., v1.0.0)'
+        description: 'Tag name for the release (e.g., v0.0.4)'
+        required: true
+        type: string
+      version:
+        description: 'Release version without the leading v (e.g., 0.0.4)'
+        required: true
+        type: string
+      upstream_alignment:
+        description: 'Result of upstream android/skills release alignment check'
         required: true
         type: string
 
@@ -20,6 +28,22 @@ jobs:
         with:
           ref: main
 
+      - name: Validate release inputs
+        env:
+          TAG_NAME: ${{ inputs.tag_name }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [[ "$VERSION" == v* ]]; then
+            echo "version must omit the leading v; got version=$VERSION" >&2
+            exit 1
+          fi
+
+          expected_tag="v${VERSION}"
+          if [[ "$TAG_NAME" != "$expected_tag" ]]; then
+            echo "tag_name must be v<version>; got tag_name=$TAG_NAME and version=$VERSION" >&2
+            exit 1
+          fi
+
       - name: Install validation dependencies
         run: |
           if ! command -v jq >/dev/null 2>&1; then
@@ -27,15 +51,92 @@ jobs:
             sudo apt-get install -y jq
           fi
 
+      - name: Validate plugin manifest versions
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          mismatched_versions="$(
+            jq -r --arg version "$VERSION" '
+              select(.version != $version) | "\(.name) has version \(.version), expected \($version)"
+            ' plugins/*/.codex-plugin/plugin.json
+          )"
+
+          if [[ -n "$mismatched_versions" ]]; then
+            echo "Plugin manifest versions must match the release version:" >&2
+            echo "$mismatched_versions" >&2
+            exit 1
+          fi
+
       - name: Validate Codex plugins
         run: scripts/validate-codex-plugins.sh
 
-      - name: Create Zip Archive
+      - name: Create marketplace archive
         run: |
-          git archive --format=zip --output=android-skills.zip HEAD
+          git archive \
+            --format=zip \
+            --output=android-skills-codex-marketplace.zip \
+            HEAD \
+            .agents/plugins \
+            plugins \
+            scripts \
+            README.md \
+            CHANGELOG.md \
+            LICENSE.txt \
+            docs/codex-marketplace-install.md
+
+      - name: Write release notes
+        env:
+          TAG_NAME: ${{ inputs.tag_name }}
+          VERSION: ${{ inputs.version }}
+          UPSTREAM_ALIGNMENT: ${{ inputs.upstream_alignment }}
+        run: |
+          {
+            echo "Android Skills Codex marketplace release ${TAG_NAME}."
+            echo
+            echo "All bundled plugin manifests use version ${VERSION}."
+            echo
+            echo "Upstream android/skills alignment:"
+            echo "- ${UPSTREAM_ALIGNMENT}"
+            echo
+            echo "Install the rolling update channel:"
+            echo '```bash'
+            echo "codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref main"
+            echo "codex plugin marketplace upgrade android-skills-codex"
+            echo '```'
+            echo
+            echo "Install this pinned release:"
+            echo '```bash'
+            echo "codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref ${TAG_NAME}"
+            echo '```'
+            echo
+            echo "Plugins:"
+            echo "- android-cli-tools"
+            echo "- android-build-and-release"
+            echo "- android-ui-migration"
+            echo "- android-xr-glimmer"
+            echo
+            echo "Changed plugins and skills:"
+            echo "- android-cli-tools ${VERSION}: android-cli-base"
+            echo "- android-build-and-release ${VERSION}: agp-9-upgrade, play-billing-library-version-upgrade, r8-analyzer"
+            echo "- android-ui-migration ${VERSION}: camera1-to-camerax, edge-to-edge, migrate-xml-views-to-jetpack-compose, navigation-3"
+            echo "- android-xr-glimmer ${VERSION}: display-ai-glasses-with-jetpack-compose-glimmer"
+            echo
+            echo "Update behavior:"
+            echo "- main is the rolling stable update channel."
+            echo "- Git tags such as ${TAG_NAME} are pinned install channels."
+            echo "- If installed from main, CLI users only need codex plugin marketplace upgrade android-skills-codex."
+            echo "- If installed from ${TAG_NAME}, change the Git ref to move to a newer pinned release."
+            echo "- Codex App users can change the Git ref to move between main and a pinned tag."
+            echo
+            echo "Artifact:"
+            echo "- android-skills-codex-marketplace.zip contains .agents/plugins, plugins, scripts, README.md, CHANGELOG.md, LICENSE.txt, and docs/codex-marketplace-install.md."
+            echo
+            echo "See CHANGELOG.md for the full release entry."
+          } > release-notes.md
 
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ inputs.tag_name }}
         run: |
-          gh release create ${{ inputs.tag_name }} android-skills.zip --title "Release ${{ inputs.tag_name }}" --notes "Manual release of main branch contents."
+          gh release create "$TAG_NAME" android-skills-codex-marketplace.zip --title "Release $TAG_NAME" --notes-file release-notes.md --target main

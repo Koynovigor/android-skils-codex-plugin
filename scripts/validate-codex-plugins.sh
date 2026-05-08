@@ -9,6 +9,17 @@ PLUGINS=(
   android-ui-migration
   android-xr-glimmer
 )
+LEGACY_ROOTS=(
+  android-cli
+  build
+  camera
+  jetpack-compose
+  navigation
+  performance
+  play
+  system
+  xr
+)
 
 fail() {
   echo "$*" >&2
@@ -28,6 +39,12 @@ grep_file() {
 }
 
 require_command jq
+
+for path in "${LEGACY_ROOTS[@]}"; do
+  if [[ -e "$ROOT/$path" ]]; then
+    fail "Legacy root path still exists: $path"
+  fi
+done
 
 if [[ ! -f "$MARKETPLACE" ]]; then
   fail "Missing .agents/plugins/marketplace.json"
@@ -74,8 +91,23 @@ for plugin in "${PLUGINS[@]}"; do
     .skills == "./skills/" and
     .interface.displayName and
     .interface.shortDescription and
-    .interface.longDescription
+    .interface.longDescription and
+    .interface.composerIcon == "./assets/icon.svg" and
+    .interface.logo == "./assets/icon.svg"
   ' "$manifest" >/dev/null
+
+  for asset_field in composerIcon logo; do
+    asset_path="$(jq -r --arg field "$asset_field" '.interface[$field]' "$manifest")"
+
+    if [[ "$asset_path" != ./assets/* || "$asset_path" == *..* ]]; then
+      fail "$plugin manifest $asset_field must point inside ./assets/"
+    fi
+
+    asset_file="$ROOT/plugins/$plugin/${asset_path#./}"
+    if [[ ! -f "$asset_file" ]]; then
+      fail "$plugin manifest $asset_field target is missing: $asset_file"
+    fi
+  done
 
   if [[ ! -d "$skills_dir" ]]; then
     fail "Missing skills directory: $skills_dir"

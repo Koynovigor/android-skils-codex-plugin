@@ -275,6 +275,8 @@ All plugin manifests use:
 - `repository`: `https://github.com/Koynovigor/android-skils-codex-plugin`.
 - `homepage`: `https://github.com/Koynovigor/android-skils-codex-plugin/blob/main/docs/codex-marketplace-install.md`.
 - No `apps`, `mcpServers`, or `hooks` in `v0.0.4`.
+- Each plugin publishes a neutral SVG icon at `./assets/icon.svg` and references it from
+  `interface.composerIcon` and `interface.logo`.
 - No Google logos or Android robot assets unless trademark usage is explicitly approved. Use neutral plugin naming and preserve Google LLC as skill metadata author where it already exists.
 
 Create `plugins/android-cli-tools/.codex-plugin/plugin.json`:
@@ -306,7 +308,9 @@ Create `plugins/android-cli-tools/.codex-plugin/plugin.json`:
       "Use Android CLI to check connected devices.",
       "Use Android CLI to search Android docs."
     ],
-    "brandColor": "#3DDC84"
+    "brandColor": "#3DDC84",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }
 ```
@@ -340,7 +344,9 @@ Create `plugins/android-build-and-release/.codex-plugin/plugin.json`:
       "Upgrade Play Billing Library.",
       "Analyze R8 keep rules."
     ],
-    "brandColor": "#4285F4"
+    "brandColor": "#4285F4",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }
 ```
@@ -374,7 +380,9 @@ Create `plugins/android-ui-migration/.codex-plugin/plugin.json`:
       "Add edge-to-edge support.",
       "Migrate this app to Navigation 3."
     ],
-    "brandColor": "#0F9D58"
+    "brandColor": "#0F9D58",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }
 ```
@@ -408,10 +416,19 @@ Create `plugins/android-xr-glimmer/.codex-plugin/plugin.json`:
       "Add a projected glasses activity.",
       "Review this Glimmer layout."
     ],
-    "brandColor": "#A142F4"
+    "brandColor": "#A142F4",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }
 ```
+
+**Status update (2026-05-08):** User-requested marketplace icons are now in scope for `v0.0.4`.
+Each plugin has a neutral, repo-owned SVG at `plugins/<plugin>/assets/icon.svg`; manifests
+reference that asset through both `interface.composerIcon` and `interface.logo`, and
+`scripts/validate-codex-plugins.sh` checks those paths and files. After visual review feedback,
+the SVGs were simplified to small-card-friendly glyphs: terminal, release package, UI migration,
+and XR glasses.
 
 ---
 
@@ -834,6 +851,28 @@ plugins/android-xr-glimmer
 - A user can install from a tag for reproducible pinned behavior.
 - Docs explain that updates require `codex plugin marketplace upgrade` or changing Git ref in the Codex App UI.
 
+**Status (2026-05-08):** Implemented. Re-checked current official OpenAI docs via the
+OpenAI docs MCP for marketplace metadata, CLI marketplace add/upgrade, local/repo
+marketplace loading, plugin structure, and manifest fields; no mismatch with the plan was found.
+SocratiCode MCP was available with a green index; graph stats showed this Markdown/YAML/shell-heavy
+repo has no dependency edges or circular dependencies, and impact checks for
+`.github/workflows/create-release.yml` and `docs/codex-marketplace-install.md` found no dependent
+files. Added a required `version` workflow input, verified `tag_name` must equal `v${version}`,
+kept plugin validation before release, changed the release archive to
+`android-skills-codex-marketplace.zip`, scoped the archive to marketplace-relevant files, and
+generated release notes with install commands, plugin list, update semantics, and artifact details.
+The release command now targets `main`. Updated `docs/codex-marketplace-install.md` with rolling
+`main` and pinned `v0.0.4` install commands, CLI sparse checkout, Codex App UI selective paths,
+narrower plugin paths, update/Git-ref behavior, plugin catalog, and release artifact contents.
+Validation run: Ruby parsed `.github/workflows/create-release.yml`; `scripts/validate-codex-plugins.sh`
+passed; the release input shell check passed for `v0.0.4`/`0.0.4`, detected a mismatched tag, and
+rejected a `version` value with a leading `v`;
+the scoped `git archive` command succeeded; `unzip -l` showed the archive path set only contains
+`.agents/plugins`, `plugins`, `scripts`, `README.md`, `LICENSE.txt`, and
+`docs/codex-marketplace-install.md`; release/install keyword checks passed; `git diff --check`
+passed. A read-only subagent review was run before implementation, and the post-implementation
+reviewer found a P1 leading-`v` input gap that was fixed and revalidated.
+
 ---
 
 ### Milestone 6: Add local Codex verification path
@@ -880,6 +919,22 @@ Build an Android XR Glimmer UI for Display AI Glasses.
 - Explicit plugin/skill invocation works.
 - Implicit trigger behavior chooses the expected skill for representative prompts.
 - No plugin requires external authentication.
+
+**Status (2026-05-08):** Implemented documentation updates; runtime install/UI validation is
+blocked by local Codex tooling. Added local development install commands for
+`/Users/igor/AndroidStudioProjects/android-skils-codex-plugin`, explicit Codex App UI verification
+steps, restart/new-thread guidance, four-plugin visibility checks, one-at-a-time install guidance,
+acceptance checks, and the nine trigger test prompts to `docs/codex-marketplace-install.md`.
+Non-invasive validation run: `scripts/validate-codex-plugins.sh` passed; required Milestone 6
+doc strings were found with `rg`; marketplace JSON still lists four plugins under
+`android-skills-codex`; no packaged `.mcp.json` or `.app.json` files exist, so no external auth
+integration is present in the repository; `git diff --check` passed. Blocked validation:
+`command -v codex` found `/opt/homebrew/bin/codex` and `codex --version` reported
+`codex-cli 0.106.0`, but `codex plugin marketplace --help` exited with
+`unexpected argument 'marketplace' found`, so the local `codex plugin marketplace add/upgrade`
+commands could not be run. Actual Codex App `/plugins` UI checks, plugin installation, explicit
+invocation, and implicit trigger routing were not run because this session has no automatable
+Codex App plugin UI control and the installed CLI lacks the required plugin marketplace command.
 
 ---
 
@@ -994,6 +1049,29 @@ codex plugin marketplace add /Users/igor/AndroidStudioProjects/android-skils-cod
 - A maintainer can cut a release with a repeatable checklist.
 - Docs make update semantics explicit.
 
+**Status (2026-05-08):** Implemented. Replaced the upstream Android Skills mirror
+`README.md` with a GitHub-ready Codex marketplace README that includes release/license/workflow/
+Codex marketplace badges, a compact table of contents, CLI and Codex App install instructions,
+copy-paste main/pinned/update/local commands, plugin and skill catalog tables, update behavior,
+collapsible troubleshooting and sparse/selective path sections, release/version notes, links, and
+Apache-2.0/Google LLC attribution without official Google/OpenAI publication claims. Rewrote
+`docs/codex-marketplace-install.md` as a public install guide with CLI install, Codex App UI
+install, selective paths, update behavior, plugin list, trigger prompts, troubleshooting, release
+artifact contents, and a concise repository layout note. Added `docs/release-process.md` with the
+temporary upstream refresh flow, `SOURCE_ROOT=/tmp/android-skills-upstream` sync command,
+validation commands, legacy-root absence gate, version/release-note checklist, upstream
+`android/skills` release alignment check, `Create Release` workflow inputs
+`tag_name=v0.0.4` and `version=0.0.4`, and tag/main install verification commands. The Milestone 6
+runtime validation gap is carried forward in the maintainer release process. Validation run:
+`scripts/validate-codex-plugins.sh` passed; release-facing placeholder search over `.agents`,
+`README.md`, and `docs` returned no matches; required README/install/release-process strings were
+found with `rg`; `git diff --check` passed. Three read-only subagents performed pre-implementation
+analysis for README, install/release docs, and plugin catalog/attribution, and their findings were
+incorporated. Post-implementation reviewer found a P1 gap where CLI users were told how to add the
+marketplace but not how to open `/plugins` and install or enable a plugin; README, install docs,
+and release process now include the `/plugins` enablement step, aligned with official OpenAI Codex
+CLI slash-command docs.
+
 ---
 
 ### Milestone 8: Remove legacy root skill layout
@@ -1015,6 +1093,7 @@ codex plugin marketplace add /Users/igor/AndroidStudioProjects/android-skils-cod
 - Modify: `README.md`
 - Modify: `docs/codex-marketplace-install.md`
 - Modify: `docs/release-process.md`
+- Modify: `AGENTS.md`
 
 **Tasks:**
 
@@ -1049,6 +1128,30 @@ scripts/validate-codex-plugins.sh
 - There is no duplicated old Android Skills root layout in the release branch.
 - Future upstream refreshes still work through temporary extraction plus `SOURCE_ROOT`.
 
+**Status (2026-05-08):** Implemented. Packaged plugins were
+confirmed before deletion with 9 `SKILL.md` files and 80 packaged reference files. Deleted the
+legacy root skill directories (`android-cli/`, `build/`, `camera/`, `jetpack-compose/`,
+`navigation/`, `performance/`, `play/`, `system/`, `xr/`) from the release layout. Updated
+`scripts/sync-codex-plugins.sh` to require an explicit `SOURCE_ROOT`, verified it succeeds from
+`/tmp/android-skills-upstream-m8.CmWicD`, and verified running it without `SOURCE_ROOT` fails with
+a clear error. Updated `.github/workflows/update-skills.yml` so upstream skills stay in
+`$RUNNER_TEMP/android-skills-upstream`, sync directly into `plugins/`, validate, and stage only
+`.agents/plugins` plus `plugins`. Updated `scripts/validate-codex-plugins.sh` to fail if any
+legacy root path reappears, while also validating plugin icon manifest fields and assets. Updated
+README/install docs to state that this repository is a Codex marketplace repository, not a
+duplicated Android Skills mirror. Updated `AGENTS.md` validation defaults so sync uses explicit
+`SOURCE_ROOT` and release-facing placeholder checks exclude preserved upstream reference files.
+Validation run: `jq` marketplace and plugin manifests passed; workflow YAML parsed with Ruby;
+`scripts/validate-codex-plugins.sh` passed; legacy root absence check passed; packaged counts
+returned 9 skills and 80 references; `rg -n "^name: base$" plugins || true` returned no matches;
+release-facing placeholder scan excluding `plugins/**/references/**` returned no matches;
+`git diff --check` passed. SocratiCode MCP was available before M8 implementation; index health was
+green and dependency graph checks reported no repository code edges or cycles for this
+Markdown/YAML/shell packaging project. Post-implementation reviewer found no source-content P0/P1
+regressions and confirmed M8 acceptance criteria, but flagged a P1 release-safety risk where only
+legacy root deletions were staged; the milestone change set was then staged together so deletions,
+workflow/script/docs/manifest safeguards, and new assets cannot be committed separately by mistake.
+
 ---
 
 ### Milestone 9: Versioning and update policy
@@ -1058,6 +1161,9 @@ scripts/validate-codex-plugins.sh
 - Modify: `plugins/*/.codex-plugin/plugin.json`
 - Create: `CHANGELOG.md`
 - Modify: `.github/workflows/create-release.yml`
+- Modify: `README.md`
+- Modify: `docs/codex-marketplace-install.md`
+- Modify: `docs/release-process.md`
 
 **Policy:**
 
@@ -1074,6 +1180,27 @@ scripts/validate-codex-plugins.sh
 - `CHANGELOG.md` lists changed plugins and skills per release.
 - Release notes tell users whether `codex plugin marketplace upgrade` is enough or whether they should change Git ref.
 - Plugin manifest versions match release notes.
+
+**Status (2026-05-08):** Implemented. Added `CHANGELOG.md` with the
+`v0.0.4` release entry, all four plugin versions, bundled skills per plugin, and update policy for
+rolling `main` versus pinned tags. All plugin manifests remain at version `0.0.4`. Updated
+`.github/workflows/create-release.yml` to validate that every plugin manifest version matches the
+release `version` input, include `CHANGELOG.md` in the marketplace archive, and generate release
+notes with changed plugins/skills plus explicit guidance: `main` installs can use
+`codex plugin marketplace upgrade android-skills-codex`, while pinned-tag installs must change Git
+ref to move to a newer release. Updated README, install docs, and release process docs so artifact
+contents and release checklist include `CHANGELOG.md` and manifest-version validation. Validation
+run: workflow YAML parsed with Ruby; manifest version check passed for `VERSION=0.0.4` and reported
+all four mismatches for `VERSION=0.0.5`; `scripts/validate-codex-plugins.sh` passed; `jq -r
+'.name + " " + .version' plugins/*/.codex-plugin/plugin.json` returned all four plugin versions as
+`0.0.4`; required changelog/release-note/update-ref strings were found with `rg`; `git diff
+--check` passed. SocratiCode MCP was rechecked before release workflow changes; graph status was
+ready with two shell files, zero dependency edges, and no circular dependencies. Post-implementation
+reviewer found no critical regressions, but flagged a P1 release-note gap: generated GitHub Release
+notes did not record the required upstream `android/skills` alignment check. The release workflow
+now requires an `upstream_alignment` input and writes it into the generated release notes; the
+release process doc shows the required input. Re-review found no P0/P1 regressions and confirmed
+the staged workflow/docs fix.
 
 ---
 
@@ -1179,6 +1306,8 @@ codex plugin marketplace upgrade android-skills-codex
 - Every plugin has `.codex-plugin/plugin.json`.
 - All 9 current skills are packaged under `plugins/*/skills/`.
 - All 80 reference files are present in packaged plugin directories.
+- Each plugin manifest references a neutral `./assets/icon.svg` through `interface.composerIcon`
+  and `interface.logo`, and the asset exists in the plugin root.
 - No packaged skill is named `base`.
 - No legacy root skill directories remain: `android-cli/`, `build/`, `camera/`, `jetpack-compose/`, `navigation/`, `performance/`, `play/`, `system/`, `xr/`.
 - No `.app.json`, `.mcp.json`, or hooks are included unless a later milestone intentionally adds them.
@@ -1192,7 +1321,8 @@ codex plugin marketplace upgrade android-skills-codex
 
 ## 10. Post-`v0.0.4` Backlog
 
-- Add neutral `assets/icon.png` and `assets/logo.png` for each plugin when final visual branding is selected.
+- Add PNG or dedicated wide logo variants only if Codex marketplace UI requires raster assets; the
+  first release now uses neutral per-plugin SVG icons at `assets/icon.svg`.
 - Add lightweight screenshots for marketplace details pages if Codex App starts surfacing screenshots for third-party marketplaces.
 - Add a small `agents/openai.yaml` per skill only if app-side skill UI metadata becomes necessary; keep plugin-level metadata as the primary install surface.
 - Consider splitting `android-ui-migration` into `android-compose-migration` and `android-device-migration` if CameraX usage grows.

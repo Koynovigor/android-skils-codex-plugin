@@ -24,6 +24,8 @@
       "Use Android CLI to check connected devices.",
       "Use Android CLI to search Android docs."
     ],
-    "brandColor": "#3DDC84"
+    "brandColor": "#3DDC84",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }

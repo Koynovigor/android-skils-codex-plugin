@@ -24,6 +24,8 @@
       "Add a projected glasses activity.",
       "Review this Glimmer layout."
     ],
-    "brandColor": "#A142F4"
+    "brandColor": "#A142F4",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
   }
 }

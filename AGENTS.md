@@ -136,8 +136,8 @@ Run commands from the repository root.
 - Validate marketplace and plugin JSON:
   - `jq . .agents/plugins/marketplace.json`
   - `jq . plugins/*/.codex-plugin/plugin.json`
-- Sync packaged plugins when the sync script exists:
-  - `scripts/sync-codex-plugins.sh`
+- Sync packaged plugins from an explicit upstream extraction when the sync script exists:
+  - `SOURCE_ROOT=/tmp/android-skills-upstream scripts/sync-codex-plugins.sh`
 - Validate packaged plugins when the validation script exists:
   - `scripts/validate-codex-plugins.sh`
 - Check packaged skill count:
@@ -147,7 +147,7 @@ Run commands from the repository root.
 - Check legacy root layout is absent before release:
   - `for path in android-cli build camera jetpack-compose navigation performance play system xr; do test ! -e "$path" || { echo "Legacy root path still exists: $path"; exit 1; }; done`
 - Check for release-facing placeholders:
-  - `rg -n "TODO|TBD|FIXME" plugins .agents README.md docs || true`
+  - `rg -n "TODO|TBD|FIXME" plugins .agents README.md docs -g '!plugins/**/references/**' || true`
 - Check that the generic packaged skill name is gone:
   - `rg -n "^name: base$" plugins || true`
 
