@@ -1,0 +1,31 @@
+{
+  "name": "android-ui-migration",
+  "version": "0.0.4",
+  "description": "Android UI, Compose, Navigation, CameraX, and edge-to-edge migration workflows for Codex.",
+  "author": {
+    "name": "Koynovigor",
+    "url": "https://github.com/Koynovigor"
+  },
+  "homepage": "https://github.com/Koynovigor/android-skils-codex-plugin/blob/main/docs/codex-marketplace-install.md",
+  "repository": "https://github.com/Koynovigor/android-skils-codex-plugin",
+  "license": "Apache-2.0",
+  "keywords": ["android", "compose", "navigation", "camerax", "edge-to-edge", "xml-migration"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Android UI Migration",
+    "shortDescription": "Compose and Android UI migrations",
+    "longDescription": "Migrate Android XML views to Compose, add edge-to-edge support, move to Navigation 3, and migrate legacy camera implementations to CameraX.",
+    "developerName": "Koynovigor",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/Koynovigor/android-skils-codex-plugin",
+    "defaultPrompt": [
+      "Migrate this XML layout to Compose.",
+      "Add edge-to-edge support.",
+      "Migrate this app to Navigation 3."
+    ],
+    "brandColor": "#0F9D58",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

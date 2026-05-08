@@ -1,69 +1,201 @@
-## Android skills
+# Android Skills for Codex
 
-**Android skills** are a dedicated repository of **AI-optimized, modular instructions** and
-resources, to help LLMs better understand and execute specific patterns that follow the best
-practices and guidance on Android development
-from [developer.android.com](https://developer.android.com).
+[![Latest Release](https://img.shields.io/github/v/release/Koynovigor/android-skils-codex-plugin?label=release)](https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE.txt)
+[![Create Release](https://github.com/Koynovigor/android-skils-codex-plugin/actions/workflows/create-release.yml/badge.svg)](https://github.com/Koynovigor/android-skils-codex-plugin/actions/workflows/create-release.yml)
+[![Codex Marketplace](https://img.shields.io/badge/Codex-marketplace-10A37F)](.agents/plugins/marketplace.json)
 
-Android skills follow the [open-standard agent skills](https://agentskills.io/home) - markdown
-files (SKILL.md) that provide a technical specification of a task, and **ground LLMs** with
-information on specialized domains and workflows.
+This repository packages Android Skills as a GitHub-backed marketplace for Codex
+App and Codex CLI. It exposes one marketplace, `android-skills-codex`, with four
+installable Codex plugins.
 
-Our Android skill development focuses on **use cases and workflows where evaluations show LLMs
-underperform**.
-We aren't prioritizing well-established areas where LLMs are already proficient, such
-as basic Jetpack Compose best practices.
+Current releases are skills-only distributions: no apps, MCP servers, hooks,
+external authentication, logos, or product gating are included.
 
-To learn more, read the official documentation:
+> [!IMPORTANT]
+> This repository is not the official OpenAI Plugin Directory and does not claim
+> publication, endorsement, or sponsorship by Google or OpenAI.
 
-- [Android skills](https://developer.android.com/tools/agents/android-skills)
-- [Android CLI](https://developer.android.com/tools/agents/android-cli)
-- [Android Studio](https://developer.android.com/studio/gemini/skills)
+## Contents
 
-### Install Android skills
+- [Quick Install](#quick-install)
+- [Codex App](#codex-app)
+- [Plugin Catalog](#plugin-catalog)
+- [Update Behavior](#update-behavior)
+- [Local Development](#local-development)
+- [Releases And Versioning](#releases-and-versioning)
+- [Changelog](CHANGELOG.md)
+- [Links](#links)
+- [License And Attribution](#license-and-attribution)
 
-Use Android CLI to install a specific skill into the current directory:
+## Quick Install
 
+Install from `latest` to track the latest GitHub release:
+
+```bash
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
+codex plugin marketplace upgrade android-skills-codex
 ```
-android skills add --skill=r8-analyzer --project=.
+
+Install a pinned release tag from [Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases):
+
+```bash
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
 ```
 
-Use Android CLI to install all Android skills to directories for all detected agents:
+Update an existing marketplace checkout:
 
+```bash
+codex plugin marketplace upgrade android-skills-codex
 ```
-android skills add --all
+
+Then open the plugin browser in Codex CLI:
+
+```text
+/plugins
 ```
 
-If you don't have any existing agent directories and don't specify particular agents, the skills
-will be installed for Gemini and Antigravity at `~/.gemini/antigravity/skills`.
+Choose `Android Skills for Codex`, install or enable the plugin you need, and
+start a new thread before using that plugin's skills.
 
-**Options:**
+> [!NOTE]
+> After installing or updating a plugin, restart Codex when needed, install the
+> plugin you want to use, and start a new thread so the enabled skills are loaded.
 
-- `--all` - Add all Android skills. If omitted (and `--skill` isn't specified), only the
-  `android-cli` skill will be installed.
-- `--agent` - A comma-separated list of agents to install the skill for. If omitted, the skill will
-  be installed for all detected agents.
-- `--skill` - Specific skill that you want to install. If omitted (and `--all` isn't specified),
-  only the `android-cli` skill will be installed.
-- `--project` - Path to a project root in which to install the skills.
+## Codex App
 
-## Disclaimer
+Open Plugins, add a marketplace, and enter:
 
-AI can make mistakes, so always double-check the results.
+| Field           | Value                                                |
+|-----------------|------------------------------------------------------|
+| Source          | `Koynovigor/android-skils-codex-plugin`              |
+| Git ref         | `latest` for updates, or a release tag for a pinned install |
+| Selective paths | `.agents/plugins` and `plugins`                      |
 
-## Contributing
+Then choose `Android Skills for Codex`, install the plugin you need, and start a
+new thread before using that plugin's skills.
 
-Submit a GitHub issue to provide feedback, report issues, or make new skill requests and changes.
+## Plugin Catalog
 
-Public contributions are not accepted at this time.
+| Plugin                      | Bundled skills                                                                               |
+|-----------------------------|----------------------------------------------------------------------------------------------|
+| `android-cli-tools`         | `android-cli-base`                                                                           |
+| `android-build-and-release` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `r8-analyzer`                       |
+| `android-ui-migration`      | `camera1-to-camerax`, `edge-to-edge`, `migrate-xml-views-to-jetpack-compose`, `navigation-3` |
+| `android-xr-glimmer`        | `display-ai-glasses-with-jetpack-compose-glimmer`                                            |
 
-## License
+| Skill                                             | Plugin                      | Purpose                                                                                                                                                    |
+|---------------------------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `android-cli-base`                                | `android-cli-tools`         | Android CLI workflows for project creation, SDK and emulator management, device interaction, screenshots, layout inspection, docs lookup, and diagnostics. |
+| `agp-9-upgrade`                                   | `android-build-and-release` | Android Gradle Plugin 9 migration guidance.                                                                                                                |
+| `play-billing-library-version-upgrade`            | `android-build-and-release` | Google Play Billing Library migration guidance.                                                                                                            |
+| `r8-analyzer`                                     | `android-build-and-release` | R8 and ProGuard keep-rule analysis.                                                                                                                        |
+| `camera1-to-camerax`                              | `android-ui-migration`      | Camera1 or raw Camera2 migration to CameraX.                                                                                                               |
+| `edge-to-edge`                                    | `android-ui-migration`      | Edge-to-edge Compose insets and system UI migration.                                                                                                       |
+| `migrate-xml-views-to-jetpack-compose`            | `android-ui-migration`      | XML View to Jetpack Compose migration workflow.                                                                                                            |
+| `navigation-3`                                    | `android-ui-migration`      | Navigation 3 migration and recipes.                                                                                                                        |
+| `display-ai-glasses-with-jetpack-compose-glimmer` | `android-xr-glimmer`        | Android XR Display AI Glasses UI with Jetpack Compose Glimmer.                                                                                             |
 
-Android Skills is licensed under the [Apache License 2.0](LICENSE.txt). See the `LICENSE.txt` file
-for
-details.
+## Update Behavior
 
-## Review our community guidelines
+`latest` is a moving Git ref updated by the release workflow after each GitHub
+Release. Use it when you want users to get the newest release with:
 
-This project follows
-[Google's Open Source Community Guidelines](https://opensource.google/conduct/).
+```bash
+codex plugin marketplace upgrade android-skills-codex
+```
+
+Release tags are pinned channels for reproducible installs.
+
+Pinned refs do not auto-advance. To move from a pinned tag to a newer release,
+change the Git ref in Codex App or add the marketplace again with a newer `--ref`.
+
+<details>
+<summary>Troubleshooting</summary>
+
+- If the marketplace appears empty, include both `.agents/plugins` and `plugins`
+  in selective paths.
+- If plugin changes are not visible, restart Codex and start a new thread.
+- If you installed from a pinned release tag, updates do not move that install
+  to a newer tag automatically.
+- Local marketplace installs use the Codex plugin cache; run
+  `codex plugin marketplace upgrade android-skills-codex` after local changes.
+- No external authentication is required for the current skills-only release.
+
+</details>
+
+<details>
+<summary>Advanced Sparse / Selective Paths</summary>
+
+Use the broad path set for normal installs:
+
+```text
+.agents/plugins
+plugins
+```
+
+Use the narrower path set when the UI or CLI asks for explicit plugin subpaths:
+
+```text
+.agents/plugins
+plugins/android-cli-tools
+plugins/android-build-and-release
+plugins/android-ui-migration
+plugins/android-xr-glimmer
+```
+
+CLI sparse checkout example:
+
+```bash
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest --sparse .agents/plugins --sparse plugins
+```
+
+</details>
+
+## Local Development
+
+Install this checkout as a local marketplace while developing:
+
+```bash
+codex plugin marketplace add /Users/igor/AndroidStudioProjects/android-skils-codex-plugin
+codex plugin marketplace upgrade android-skills-codex
+```
+
+Local runtime validation is currently blocked on this machine because the installed
+`codex-cli 0.106.0` does not expose `codex plugin marketplace`.
+
+The release source of truth is the Codex marketplace layout under
+`.agents/plugins/` and `plugins/`. Legacy Android Skills root directories such
+as `android-cli/`, `build/`, and `xr/` are not part of the final repository
+layout.
+
+## Releases And Versioning
+
+- The latest GitHub Release is available at
+  [releases/latest](https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest).
+- Plugin manifest versions are validated against the release workflow `version`
+  input.
+- Git tags are stable pinned channels.
+- `latest` is the moving stable release ref for normal installs.
+- `main` is the development branch used by the release workflow.
+- Release artifacts include `.agents/plugins/`, `plugins/`, `scripts/`,
+  `README.md`, `CHANGELOG.md`, `LICENSE.txt`, and `docs/`.
+- See [CHANGELOG.md](CHANGELOG.md) for changed plugins, bundled skills, and
+  upgrade guidance per release.
+
+## Links
+
+- [Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases)
+- [Issues](https://github.com/Koynovigor/android-skils-codex-plugin/issues)
+- [License](LICENSE.txt)
+- [OpenAI Codex plugin docs](https://developers.openai.com/codex/plugins/build)
+- [Upstream android/skills](https://github.com/android/skills)
+- [Install guide](docs/codex-marketplace-install.md)
+- [Release process](docs/release-process.md)
+
+## License And Attribution
+
+This repository is licensed under [Apache-2.0](LICENSE.txt). Android skill content
+retains its existing Google LLC metadata and licensing references. This packaging
+does not include Google logos, Android robot assets, OpenAI logos, or official
+publication claims.

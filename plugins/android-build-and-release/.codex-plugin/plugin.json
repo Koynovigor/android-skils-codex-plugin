@@ -1,0 +1,31 @@
+{
+  "name": "android-build-and-release",
+  "version": "0.0.4",
+  "description": "Android build, release, billing, and R8 optimization workflows for Codex.",
+  "author": {
+    "name": "Koynovigor",
+    "url": "https://github.com/Koynovigor"
+  },
+  "homepage": "https://github.com/Koynovigor/android-skils-codex-plugin/blob/main/docs/codex-marketplace-install.md",
+  "repository": "https://github.com/Koynovigor/android-skils-codex-plugin",
+  "license": "Apache-2.0",
+  "keywords": ["android", "gradle", "agp", "play-billing", "r8", "proguard"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Android Build and Release",
+    "shortDescription": "AGP, Play Billing, and R8 workflows",
+    "longDescription": "Migrate Android projects to AGP 9, upgrade Google Play Billing Library, and analyze R8 or ProGuard keep rules using Android-focused guidance.",
+    "developerName": "Koynovigor",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/Koynovigor/android-skils-codex-plugin",
+    "defaultPrompt": [
+      "Migrate this project to AGP 9.",
+      "Upgrade Play Billing Library.",
+      "Analyze R8 keep rules."
+    ],
+    "brandColor": "#4285F4",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

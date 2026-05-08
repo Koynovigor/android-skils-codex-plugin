@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+    <title>Android Build and Release</title>
+    <defs>
+        <linearGradient id="bg" x1="88" y1="424" x2="424" y2="88" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#12325E" />
+            <stop offset="1" stop-color="#3BB7F6" />
+        </linearGradient>
+    </defs>
+    <rect width="512" height="512" rx="112" fill="url(#bg)" />
+    <path d="M256 116L382 188V332L256 404L130 332V188L256 116Z" fill="#0A1F39" opacity="0.72" />
+    <path d="M256 116L382 188L256 260L130 188L256 116Z" fill="#88FAFF" />
+    <path d="M130 188L256 260V404L130 332V188Z" fill="#66C6FF" />
+    <path d="M382 188L256 260V404L382 332V188Z" fill="#1D78D5" />
+    <path d="M256 116L382 188V332L256 404L130 332V188L256 116Z" fill="none" stroke="#DFF8FF"
+        stroke-opacity="0.76" stroke-linejoin="round" stroke-width="7" />
+    <path d="M256 332V186" fill="none" stroke="#FFF7B8" stroke-linecap="round" stroke-width="28" />
+    <path d="M214 228L256 186L298 228" fill="none" stroke="#FFF7B8" stroke-linecap="round"
+        stroke-linejoin="round" stroke-width="28" />
+</svg>
