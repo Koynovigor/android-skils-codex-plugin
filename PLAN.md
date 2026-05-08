@@ -1095,17 +1095,17 @@ codex plugin marketplace upgrade android-skills-codex
 
 ## 8. Risks and Mitigations
 
-| Risk | Impact | Mitigation |
-|---|---|---|
-| Existing update workflow deletes `plugins/` | Release packaging disappears during skill refresh | Rewrite update workflow to use temporary upstream extraction and sync only into `plugins/`. |
-| `android-cli/base` skill name collides with other skills | Poor discovery and confusing explicit invocation | Rename packaged copy to `android-cli-base`. |
-| Marketplace sparse checkout omits plugin directories | Marketplace appears but plugin entries are skipped | Document selective paths as `.agents/plugins` plus `plugins` or all plugin subdirectories. |
-| Legal/brand confusion with Google-authored skills | Users may think the packaging is official Google distribution | Preserve Apache-2.0 license and skill metadata, avoid Google logos, state repository packaging clearly. |
-| Reference-heavy XR plugin bloats every install | Users install unrelated content | Keep XR as its own plugin. |
-| Legacy root layout remains after migration | Repository stays noisy, duplicated, and confusing for Codex marketplace consumers | Add cleanup milestone, delete old root directories, and validate they cannot reappear in release. |
-| Upstream refresh depends on deleted root directories | Future skill updates fail after cleanup | Make sync script accept `SOURCE_ROOT` and make CI download upstream into a temp directory. |
-| Skill descriptions are too long or weak | Codex implicit invocation becomes unreliable | Front-load trigger phrases and keep each description scoped. |
-| Official OpenAI plugin publishing changes | Marketplace structure may need adjustment | Keep docs links in release process and re-check OpenAI docs before `v1.0.0`. |
+| Risk                                                     | Impact                                                                            | Mitigation                                                                                              |
+|----------------------------------------------------------|-----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| Existing update workflow deletes `plugins/`              | Release packaging disappears during skill refresh                                 | Rewrite update workflow to use temporary upstream extraction and sync only into `plugins/`.             |
+| `android-cli/base` skill name collides with other skills | Poor discovery and confusing explicit invocation                                  | Rename packaged copy to `android-cli-base`.                                                             |
+| Marketplace sparse checkout omits plugin directories     | Marketplace appears but plugin entries are skipped                                | Document selective paths as `.agents/plugins` plus `plugins` or all plugin subdirectories.              |
+| Legal/brand confusion with Google-authored skills        | Users may think the packaging is official Google distribution                     | Preserve Apache-2.0 license and skill metadata, avoid Google logos, state repository packaging clearly. |
+| Reference-heavy XR plugin bloats every install           | Users install unrelated content                                                   | Keep XR as its own plugin.                                                                              |
+| Legacy root layout remains after migration               | Repository stays noisy, duplicated, and confusing for Codex marketplace consumers | Add cleanup milestone, delete old root directories, and validate they cannot reappear in release.       |
+| Upstream refresh depends on deleted root directories     | Future skill updates fail after cleanup                                           | Make sync script accept `SOURCE_ROOT` and make CI download upstream into a temp directory.              |
+| Skill descriptions are too long or weak                  | Codex implicit invocation becomes unreliable                                      | Front-load trigger phrases and keep each description scoped.                                            |
+| Official OpenAI plugin publishing changes                | Marketplace structure may need adjustment                                         | Keep docs links in release process and re-check OpenAI docs before `v1.0.0`.                            |
 
 ---
 
