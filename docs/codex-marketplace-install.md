@@ -7,18 +7,19 @@ Current releases are skills-only marketplace distributions. They do not require
 external authentication and do not claim Google or OpenAI
 publication, endorsement, or sponsorship.
 
-## CLI Install
+## Codex CLI Install
 
-Use `latest` as the stable release update channel:
+Recommended install: use `latest` as the stable release update channel. The
+repository release workflow moves this Git ref to the latest release commit.
 
 ```bash
 codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
 codex plugin marketplace upgrade android-skills-codex
 ```
 
-Use a release tag from
-[Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases)
-for reproducible pinned installs:
+Pinned install: open
+[Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases),
+copy the release tag, and use that tag as the Git ref:
 
 ```bash
 codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
@@ -40,15 +41,18 @@ After adding or upgrading the marketplace, open the Codex CLI plugin browser:
 Choose `Android Skills for Codex`, install or enable the plugin you need, and
 start a new thread before using that plugin's skills.
 
-## Codex App UI
+## Codex App Install
 
-Open Plugins, add a marketplace, and enter:
+Open Plugins, choose add marketplace, and enter:
 
 | Field           | Value                                                                           |
 |-----------------|---------------------------------------------------------------------------------|
 | Source          | `Koynovigor/android-skils-codex-plugin`                                         |
 | Git ref         | `latest` for the release update channel, or a release tag for a pinned install  |
 | Selective paths | `.agents/plugins` and `plugins`                                                 |
+
+Do not paste a GitHub release URL into `Source`. The source is the repository
+shorthand above. The release selection belongs in `Git ref`.
 
 For a narrower selective checkout, include the marketplace metadata and each
 plugin directory:
@@ -63,12 +67,11 @@ plugins/android-xr-glimmer
 
 After adding the marketplace:
 
-1. Restart Codex after local marketplace or plugin file changes.
-2. Open `/plugins`.
-3. Choose `Android Skills for Codex`.
-4. Verify that all four plugins are visible.
-5. Install each plugin one at a time.
-6. Start a new thread after installing a plugin so the enabled skills are loaded.
+1. Choose `Android Skills for Codex`.
+2. Verify that all four plugins are visible.
+3. Install each plugin you need.
+4. Start a new thread after installing a plugin so the enabled skills are loaded.
+5. Restart Codex if marketplace or plugin changes are not visible.
 
 ## Local Development Install
 

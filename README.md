@@ -18,7 +18,7 @@ external authentication, logos, or product gating are included.
 
 ## Contents
 
-- [Quick Install](#quick-install)
+- [Codex CLI](#codex-cli)
 - [Codex App](#codex-app)
 - [Plugin Catalog](#plugin-catalog)
 - [Update Behavior](#update-behavior)
@@ -28,22 +28,32 @@ external authentication, logos, or product gating are included.
 - [Links](#links)
 - [License And Attribution](#license-and-attribution)
 
-## Quick Install
+## Codex CLI
 
-Install from `latest` to track the latest GitHub release:
+Recommended install: track the latest GitHub release through the moving
+`latest` Git ref.
 
 ```bash
 codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
 codex plugin marketplace upgrade android-skills-codex
 ```
 
-Install a pinned release tag from [Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases):
+Pinned install: copy a release tag from
+[Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases)
+and use it as the Git ref.
 
 ```bash
 codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
 ```
 
-Update an existing marketplace checkout:
+If you use sparse checkout, include both marketplace metadata and plugin
+payload:
+
+```bash
+codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest --sparse .agents/plugins --sparse plugins
+```
+
+Update an existing CLI marketplace checkout:
 
 ```bash
 codex plugin marketplace upgrade android-skills-codex
@@ -64,13 +74,16 @@ start a new thread before using that plugin's skills.
 
 ## Codex App
 
-Open Plugins, add a marketplace, and enter:
+Open Plugins, add a marketplace, and enter these fields:
 
-| Field           | Value                                                |
-|-----------------|------------------------------------------------------|
-| Source          | `Koynovigor/android-skils-codex-plugin`              |
+| Field           | Value                                                       |
+|-----------------|-------------------------------------------------------------|
+| Source          | `Koynovigor/android-skils-codex-plugin`                     |
 | Git ref         | `latest` for updates, or a release tag for a pinned install |
-| Selective paths | `.agents/plugins` and `plugins`                      |
+| Selective paths | `.agents/plugins` and `plugins`                             |
+
+Do not paste a GitHub release URL into `Source`. Use the repository shorthand
+above, then put the release tag or `latest` in `Git ref`.
 
 Then choose `Android Skills for Codex`, install the plugin you need, and start a
 new thread before using that plugin's skills.
