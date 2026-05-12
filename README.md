@@ -76,17 +76,21 @@ start a new thread before using that plugin's skills.
 
 Open Plugins, add a marketplace, and enter these fields:
 
-| Field           | Value                                                       |
-|-----------------|-------------------------------------------------------------|
-| Source          | `Koynovigor/android-skils-codex-plugin`                     |
-| Git ref         | `latest` for updates, or a release tag for a pinned install |
-| Selective paths | `.agents/plugins` and `plugins`                             |
+| Field           | Value                                                                                   |
+|-----------------|-----------------------------------------------------------------------------------------|
+| Source          | `Koynovigor/android-skils-codex-plugin`                                                 |
+| Git ref         | `latest` for the updateable release channel, or a release tag only for a pinned install |
+| Selective paths | `.agents/plugins` and `plugins`                                                         |
 
 Do not paste a GitHub release URL into `Source`. Use the repository shorthand
 above, then put the release tag or `latest` in `Git ref`.
 
 Then choose `Android Skills for Codex`, install the plugin you need, and start a
 new thread before using that plugin's skills.
+
+Use `latest` when you expect the Codex App **Update** button to move the
+marketplace to the newest release. A pinned release tag such as `v0.0.5` is
+reproducible but does not advance when newer tags are published.
 
 ## Plugin Catalog
 
@@ -102,7 +106,7 @@ new thread before using that plugin's skills.
 | `android-cli-base`                                | `android-cli-tools`         | Android CLI workflows for project creation, SDK and emulator management, device interaction, screenshots, layout inspection, docs lookup, and diagnostics. |
 | `agp-9-upgrade`                                   | `android-build-and-release` | Android Gradle Plugin 9 migration guidance.                                                                                                                |
 | `play-billing-library-version-upgrade`            | `android-build-and-release` | Google Play Billing Library migration guidance.                                                                                                            |
-| `perfetto-sql`                                    | `android-build-and-release` | Perfetto SQL query guidance for Android trace analysis with `trace_processor`.                                                                              |
+| `perfetto-sql`                                    | `android-build-and-release` | Perfetto SQL query guidance for Android trace analysis with `trace_processor`.                                                                             |
 | `r8-analyzer`                                     | `android-build-and-release` | R8 and ProGuard keep-rule analysis.                                                                                                                        |
 | `camera1-to-camerax`                              | `android-ui-migration`      | Camera1 or raw Camera2 migration to CameraX.                                                                                                               |
 | `edge-to-edge`                                    | `android-ui-migration`      | Edge-to-edge Compose insets and system UI migration.                                                                                                       |
@@ -123,6 +127,10 @@ Release tags are pinned channels for reproducible installs.
 
 Pinned refs do not auto-advance. To move from a pinned tag to a newer release,
 change the Git ref in Codex App or add the marketplace again with a newer `--ref`.
+
+In Codex App, **Update** refreshes the configured Git ref. It does not change a
+pinned ref such as `v0.0.5` to a newer release. Use `latest` as the Git ref for
+the updateable release channel.
 
 <details>
 <summary>Troubleshooting</summary>

@@ -45,14 +45,22 @@ start a new thread before using that plugin's skills.
 
 Open Plugins, choose add marketplace, and enter:
 
-| Field           | Value                                                                           |
-|-----------------|---------------------------------------------------------------------------------|
-| Source          | `Koynovigor/android-skils-codex-plugin`                                         |
-| Git ref         | `latest` for the release update channel, or a release tag for a pinned install  |
-| Selective paths | `.agents/plugins` and `plugins`                                                 |
+| Field           | Value                                                                                   |
+|-----------------|-----------------------------------------------------------------------------------------|
+| Source          | `Koynovigor/android-skils-codex-plugin`                                                 |
+| Git ref         | `latest` for the updateable release channel, or a release tag only for a pinned install |
+| Selective paths | `.agents/plugins` and `plugins`                                                         |
 
 Do not paste a GitHub release URL into `Source`. The source is the repository
 shorthand above. The release selection belongs in `Git ref`.
+
+Use `latest` if you want the Codex App **Update** button to pick up newer
+GitHub releases. The button refreshes the configured Git ref; it does not move a
+pinned tag such as `v0.0.5` to a newer tag.
+
+Do not use a release tag as the Git ref unless you intentionally want a
+reproducible pinned install. To move a pinned install to a newer release, change
+the Git ref to `latest` or to the newer release tag, then update the marketplace.
 
 For a narrower selective checkout, include the marketplace metadata and each
 plugin directory:
@@ -94,7 +102,8 @@ codex plugin marketplace upgrade android-skills-codex
 ```
 
 In the Codex App UI, change the Git ref to move between `latest` and a pinned
-release tag. Pinned refs do not auto-advance.
+release tag. Pinned refs do not auto-advance, and **Update** only refreshes the
+currently configured ref.
 
 ## Plugins
 

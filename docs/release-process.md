@@ -127,6 +127,10 @@ plugin can be installed or enabled.
 In Codex App, verify `/plugins` shows `Android Skills for Codex`, all four
 plugins are installable, and a new thread can use the installed skills.
 
+When testing Codex App update behavior, use Git ref `latest`. The app's
+marketplace update action refreshes the configured Git ref; a pinned release tag
+does not auto-advance to newer releases.
+
 ## Current Runtime Validation Gap
 
 Local runtime validation is blocked on this machine because
