@@ -80,7 +80,7 @@ new thread before using that plugin's skills.
 | Plugin                      | Bundled skills                                                                               |
 |-----------------------------|----------------------------------------------------------------------------------------------|
 | `android-cli-tools`         | `android-cli-base`                                                                           |
-| `android-build-and-release` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `r8-analyzer`                       |
+| `android-build-and-release` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `perfetto-sql`, `r8-analyzer`       |
 | `android-ui-migration`      | `camera1-to-camerax`, `edge-to-edge`, `migrate-xml-views-to-jetpack-compose`, `navigation-3` |
 | `android-xr-glimmer`        | `display-ai-glasses-with-jetpack-compose-glimmer`                                            |
 
@@ -89,6 +89,7 @@ new thread before using that plugin's skills.
 | `android-cli-base`                                | `android-cli-tools`         | Android CLI workflows for project creation, SDK and emulator management, device interaction, screenshots, layout inspection, docs lookup, and diagnostics. |
 | `agp-9-upgrade`                                   | `android-build-and-release` | Android Gradle Plugin 9 migration guidance.                                                                                                                |
 | `play-billing-library-version-upgrade`            | `android-build-and-release` | Google Play Billing Library migration guidance.                                                                                                            |
+| `perfetto-sql`                                    | `android-build-and-release` | Perfetto SQL query guidance for Android trace analysis with `trace_processor`.                                                                              |
 | `r8-analyzer`                                     | `android-build-and-release` | R8 and ProGuard keep-rule analysis.                                                                                                                        |
 | `camera1-to-camerax`                              | `android-ui-migration`      | Camera1 or raw Camera2 migration to CameraX.                                                                                                               |
 | `edge-to-edge`                                    | `android-ui-migration`      | Edge-to-edge Compose insets and system UI migration.                                                                                                       |

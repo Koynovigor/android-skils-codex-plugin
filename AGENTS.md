@@ -60,8 +60,8 @@ Android application project.
 ## Repository Layout Rules
 
 - The root Android skill directories are temporary migration inputs only:
-  `android-cli/`, `build/`, `camera/`, `jetpack-compose/`, `navigation/`, `performance/`, `play/`,
-  `system/`, and `xr/`.
+  `android-cli/`, `build/`, `camera/`, `devtools/`, `jetpack-compose/`, `navigation/`,
+  `performance/`, `play/`, `profilers/`, `system/`, and `xr/`.
 - The final release layout must remove those legacy root directories after their contents are
   packaged and validated under `plugins/*/skills/`.
 - Codex distribution files live in `.agents/plugins/`, `plugins/`, `scripts/`, and `docs/`; after
@@ -71,8 +71,8 @@ Android application project.
   `android-xr-glimmer`.
 - Packaged skills under `plugins/*/skills/` must preserve their `references/` directories and
   relative links.
-- The root skill `android-cli/base` is too generic for marketplace distribution. The packaged
-  skill must be named `android-cli-base`.
+- The upstream Android CLI skill has used paths such as `android-cli/base` and
+  `devtools/android-cli`; the packaged skill must stay named `android-cli-base`.
 - During migration, treat packaged skill copies as distribution output generated from the legacy
   root layout. After cleanup, edit plugin skill directories directly or refresh from a temporary
   upstream extraction via the sync script's `SOURCE_ROOT`.
@@ -145,7 +145,7 @@ Run commands from the repository root.
 - Check packaged references:
   - `find plugins -path '*/references/*' -type f | wc -l`
 - Check legacy root layout is absent before release:
-  - `for path in android-cli build camera jetpack-compose navigation performance play system xr; do test ! -e "$path" || { echo "Legacy root path still exists: $path"; exit 1; }; done`
+  - `for path in android-cli build camera devtools jetpack-compose navigation performance play profilers system xr; do test ! -e "$path" || { echo "Legacy root path still exists: $path"; exit 1; }; done`
 - Check for release-facing placeholders:
   - `rg -n "TODO|TBD|FIXME" plugins .agents README.md docs -g '!plugins/**/references/**' || true`
 - Check that the generic packaged skill name is gone:

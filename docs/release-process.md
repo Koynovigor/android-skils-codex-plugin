@@ -25,7 +25,7 @@ scripts/validate-codex-plugins.sh
 Confirm the legacy root layout is absent:
 
 ```bash
-for path in android-cli build camera jetpack-compose navigation performance play system xr; do
+for path in android-cli build camera devtools jetpack-compose navigation performance play profilers system xr; do
   test ! -e "$path" || { echo "Legacy root path still exists: $path"; exit 1; }
 done
 ```
@@ -37,7 +37,7 @@ find plugins -name SKILL.md | wc -l
 find plugins -path '*/references/*' -type f | wc -l
 ```
 
-The current marketplace contains 9 packaged skills and 80 packaged reference
+The current marketplace contains 10 packaged skills and 83 packaged reference
 files. If that package shape changes, update the validator, changelog, and
 release notes together.
 

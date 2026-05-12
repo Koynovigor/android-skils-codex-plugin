@@ -13,10 +13,12 @@ LEGACY_ROOTS=(
   android-cli
   build
   camera
+  devtools
   jetpack-compose
   navigation
   performance
   play
+  profilers
   system
   xr
 )
@@ -123,19 +125,19 @@ fi
 
 unexpected_plugin_configs="$(find "$ROOT/plugins" \( -name .app.json -o -name .mcp.json -o -path '*/hooks/*' \) -print)"
 if [[ -n "$unexpected_plugin_configs" ]]; then
-  echo "Unexpected plugin configs for v0.0.4 skills-only release:" >&2
+  echo "Unexpected plugin configs for v0.0.5 skills-only release:" >&2
   echo "$unexpected_plugin_configs" >&2
   exit 1
 fi
 
 skill_count="$(find "$ROOT/plugins" -name SKILL.md | wc -l | tr -d '[:space:]')"
-if [[ "$skill_count" != "9" ]]; then
-  fail "Expected 9 packaged skills, found $skill_count"
+if [[ "$skill_count" != "10" ]]; then
+  fail "Expected 10 packaged skills, found $skill_count"
 fi
 
 reference_count="$(find "$ROOT/plugins" -path '*/references/*' -type f | wc -l | tr -d '[:space:]')"
-if [[ "$reference_count" != "80" ]]; then
-  fail "Expected 80 packaged reference files, found $reference_count"
+if [[ "$reference_count" != "83" ]]; then
+  fail "Expected 83 packaged reference files, found $reference_count"
 fi
 
 while IFS= read -r -d '' skill_file; do
@@ -204,6 +206,9 @@ grep_file "$ROOT/plugins/android-build-and-release/skills/play-billing-library-v
 grep_file "$ROOT/plugins/android-build-and-release/skills/r8-analyzer/SKILL.md" \
   'R8/ProGuard keep rules' \
   "r8-analyzer description must front-load R8/ProGuard keep rules"
+grep_file "$ROOT/plugins/android-build-and-release/skills/perfetto-sql/SKILL.md" \
+  'Perfetto SQL|trace_processor|Android Perfetto' \
+  "perfetto-sql must mention Perfetto SQL, trace_processor, or Android Perfetto"
 grep_file "$ROOT/plugins/android-ui-migration/skills/edge-to-edge/SKILL.md" \
   'edge-to-edge Compose insets' \
   "edge-to-edge description must front-load edge-to-edge Compose insets"

@@ -7,6 +7,7 @@ description: edge-to-edge Compose insets migration for Jetpack Compose apps that
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
+  last-updated: '2026-04-01'
   keywords:
   - android
   - compose
