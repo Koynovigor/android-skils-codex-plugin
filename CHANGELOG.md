@@ -2,6 +2,56 @@
 
 All notable changes for the Android Skills Codex marketplace are tracked here.
 
+## v0.0.5 - 2026-05-12
+
+Synchronizes the Codex marketplace packaging with upstream `android/skills`
+`v0.0.5`, published on 2026-05-09.
+
+### Upstream Alignment
+
+- Upstream release tag: `android/skills` `v0.0.5`.
+- Upstream release body: `Manual release of main branch contents.`
+- Upstream `v0.0.4...v0.0.5` adds `devtools/android-cli` and
+  `profilers/perfetto-sql`, removes the old `android-cli/base` path, and
+  refreshes bundled skill metadata and references.
+
+### Versioning And Update Policy
+
+- Repository release tag: `v0.0.5`.
+- Plugin manifest version for all bundled plugins: `0.0.5`.
+- `latest` remains the moving stable release ref; use
+  `codex plugin marketplace upgrade android-skills-codex` to refresh a `latest`
+  install.
+- Release tags such as `v0.0.5` are pinned channels; change the Git ref to move
+  a pinned install to a newer release.
+
+### Changed Plugins And Skills
+
+- `android-cli-tools` `0.0.5`
+  - Refreshed `android-cli-base` from upstream `devtools/android-cli` while
+    preserving the packaged Codex skill name.
+  - Added upstream Android CLI references for device interaction and journeys.
+- `android-build-and-release` `0.0.5`
+  - Refreshed `agp-9-upgrade`.
+  - Refreshed `play-billing-library-version-upgrade`.
+  - Refreshed `r8-analyzer`.
+  - Added `perfetto-sql`.
+- `android-ui-migration` `0.0.5`
+  - Refreshed `camera1-to-camerax`.
+  - Refreshed `edge-to-edge`.
+  - Refreshed `migrate-xml-views-to-jetpack-compose`.
+  - Refreshed `navigation-3`.
+- `android-xr-glimmer` `0.0.5`
+  - Refreshed `display-ai-glasses-with-jetpack-compose-glimmer`.
+
+### Packaging
+
+- Updated the sync script to source Android CLI from `devtools/android-cli`.
+- Added `profilers/perfetto-sql` to the packaged marketplace output.
+- Updated validator and release process expectations to 10 packaged skills and
+  83 packaged reference files.
+- Updated generated GitHub Release notes to list `perfetto-sql`.
+
 ## v0.0.4 - 2026-05-08
 
 Initial public Codex marketplace release.

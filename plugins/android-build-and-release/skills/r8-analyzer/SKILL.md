@@ -7,6 +7,7 @@ description: R8/ProGuard keep rules analysis for Android build files to identify
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
+  last-updated: '2026-04-25'
   keywords:
   - R8
   - proguard

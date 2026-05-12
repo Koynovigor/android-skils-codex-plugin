@@ -1,6 +1,6 @@
 {
   "name": "android-cli-tools",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Reusable Android CLI workflows for Codex.",
   "author": {
     "name": "Koynovigor",
@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "Android CLI Tools",
     "shortDescription": "Android CLI workflows for Codex",
-    "longDescription": "Use Android CLI commands for project creation, SDK management, emulator work, device interaction, screenshots, layout inspection, and Android documentation lookup.",
+    "longDescription": "Use Android CLI commands for project creation, deployment, SDK management, emulator work, device interaction, screenshots, layout inspection, Android documentation lookup, and environment diagnostics.",
     "developerName": "Koynovigor",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],

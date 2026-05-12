@@ -101,7 +101,7 @@ release tag. Pinned refs do not auto-advance.
 | Plugin                      | Purpose                                                    |
 |-----------------------------|------------------------------------------------------------|
 | `android-cli-tools`         | Android CLI workflows for Codex.                           |
-| `android-build-and-release` | AGP, Play Billing Library, and R8 workflows.               |
+| `android-build-and-release` | AGP, Play Billing Library, R8, and Perfetto workflows.     |
 | `android-ui-migration`      | Compose, Navigation, CameraX, and edge-to-edge migrations. |
 | `android-xr-glimmer`        | Android XR Glimmer guidance for Display AI Glasses.        |
 
@@ -114,6 +114,7 @@ Use Android CLI to inspect this project.
 Migrate this project to AGP 9.
 Upgrade Play Billing Library to the latest stable version.
 Analyze this project's R8 keep rules.
+Analyze this Perfetto trace with Perfetto SQL.
 Add edge-to-edge support to this Compose app.
 Migrate this XML layout to Jetpack Compose.
 Migrate this app to Navigation 3.

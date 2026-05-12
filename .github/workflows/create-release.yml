@@ -118,7 +118,7 @@ jobs:
             echo
             echo "Changed plugins and skills:"
             echo "- android-cli-tools ${VERSION}: android-cli-base"
-            echo "- android-build-and-release ${VERSION}: agp-9-upgrade, play-billing-library-version-upgrade, r8-analyzer"
+            echo "- android-build-and-release ${VERSION}: agp-9-upgrade, play-billing-library-version-upgrade, perfetto-sql, r8-analyzer"
             echo "- android-ui-migration ${VERSION}: camera1-to-camerax, edge-to-edge, migrate-xml-views-to-jetpack-compose, navigation-3"
             echo "- android-xr-glimmer ${VERSION}: display-ai-glasses-with-jetpack-compose-glimmer"
             echo
