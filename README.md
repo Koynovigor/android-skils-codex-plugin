@@ -22,7 +22,6 @@ external authentication, logos, or product gating are included.
 - [Codex App](#codex-app)
 - [Plugin Catalog](#plugin-catalog)
 - [Update Behavior](#update-behavior)
-- [Local Development](#local-development)
 - [Releases And Versioning](#releases-and-versioning)
 - [Changelog](CHANGELOG.md)
 - [Links](#links)
@@ -173,23 +172,6 @@ codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest 
 ```
 
 </details>
-
-## Local Development
-
-Install this checkout as a local marketplace while developing:
-
-```bash
-codex plugin marketplace add /Users/igor/AndroidStudioProjects/android-skils-codex-plugin
-codex plugin marketplace upgrade android-skills-codex
-```
-
-Local runtime validation is currently blocked on this machine because the installed
-`codex-cli 0.106.0` does not expose `codex plugin marketplace`.
-
-The release source of truth is the Codex marketplace layout under
-`.agents/plugins/` and `plugins/`. Legacy Android Skills root directories such
-as `android-cli/`, `build/`, and `xr/` are not part of the final repository
-layout.
 
 ## Releases And Versioning
 
