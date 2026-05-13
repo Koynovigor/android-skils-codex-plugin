@@ -1,8 +1,8 @@
 # Codex Dev Forge
 
-[![Latest Release](https://img.shields.io/github/v/release/Koynovigor/android-skils-codex-plugin?label=release)](https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/Koynovigor/codex-dev-forge?label=release)](https://github.com/Koynovigor/codex-dev-forge/releases/latest)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE.txt)
-[![Create Release](https://github.com/Koynovigor/android-skils-codex-plugin/actions/workflows/create-release.yml/badge.svg)](https://github.com/Koynovigor/android-skils-codex-plugin/actions/workflows/create-release.yml)
+[![Create Release](https://github.com/Koynovigor/codex-dev-forge/actions/workflows/create-release.yml/badge.svg)](https://github.com/Koynovigor/codex-dev-forge/actions/workflows/create-release.yml)
 [![Codex Marketplace](https://img.shields.io/badge/Codex-marketplace-10A37F)](.agents/plugins/marketplace.json)
 
 This repository packages a GitHub-backed Codex marketplace named
@@ -23,23 +23,23 @@ Recommended install: track the latest GitHub release through the moving
 `latest` Git ref.
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref latest
 codex plugin marketplace upgrade codex-dev-forge
 ```
 
 Pinned install: copy a release tag from
-[Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases)
+[Releases](https://github.com/Koynovigor/codex-dev-forge/releases)
 and use it as the Git ref.
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref <release-tag>
 ```
 
 If you use sparse checkout, include both marketplace metadata and plugin
 payload:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest --sparse .agents/plugins --sparse plugins
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref latest --sparse .agents/plugins --sparse plugins
 ```
 
 Then open the plugin browser in Codex CLI:
@@ -57,7 +57,7 @@ Open Plugins, add a marketplace, and enter these fields:
 
 | Field           | Value                                                                                   |
 |-----------------|-----------------------------------------------------------------------------------------|
-| Source          | `Koynovigor/android-skils-codex-plugin`                                                 |
+| Source          | `Koynovigor/codex-dev-forge`                                                            |
 | Git ref         | `latest` for the updateable release channel, or a release tag only for a pinned install |
 | Selective paths | `.agents/plugins` and `plugins`                                                         |
 
@@ -128,7 +128,7 @@ auto-advance; change the Git ref to move to a newer release.
 ## Releases And Versioning
 
 - The latest GitHub Release is available at
-  [releases/latest](https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest).
+  [releases/latest](https://github.com/Koynovigor/codex-dev-forge/releases/latest).
 - Plugin manifest versions are validated against the release workflow `version`
   input.
 - Release artifacts include `.agents/plugins/`, `plugins/`, `scripts/`,

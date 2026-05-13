@@ -14,23 +14,23 @@ Recommended install: use `latest` as the stable release update channel. The
 repository release workflow moves this Git ref to the latest release commit.
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref latest
 codex plugin marketplace upgrade codex-dev-forge
 ```
 
 Pinned install: open
-[Releases](https://github.com/Koynovigor/android-skils-codex-plugin/releases),
+[Releases](https://github.com/Koynovigor/codex-dev-forge/releases),
 copy the release tag, and use that tag as the Git ref:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref <release-tag>
 ```
 
 If using sparse checkout from the CLI, include both marketplace metadata and
 plugin payload:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest --sparse .agents/plugins --sparse plugins
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref latest --sparse .agents/plugins --sparse plugins
 ```
 
 After adding or upgrading the marketplace, open the Codex CLI plugin browser:
@@ -48,7 +48,7 @@ Open Plugins, choose add marketplace, and enter:
 
 | Field           | Value                                                                                   |
 |-----------------|-----------------------------------------------------------------------------------------|
-| Source          | `Koynovigor/android-skils-codex-plugin`                                                 |
+| Source          | `Koynovigor/codex-dev-forge`                                                            |
 | Git ref         | `latest` for the updateable release channel, or a release tag only for a pinned install |
 | Selective paths | `.agents/plugins` and `plugins`                                                         |
 
@@ -88,7 +88,7 @@ if it is still listed.
 For CLI users, run:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref latest
 codex plugin marketplace upgrade codex-dev-forge
 ```
 
@@ -100,7 +100,7 @@ Then open `/plugins`, verify `Codex Dev Forge`, and remove or disable any stale
 Use the local repository checkout while developing marketplace or plugin changes:
 
 ```bash
-codex plugin marketplace add /Users/igor/AndroidStudioProjects/android-skils-codex-plugin
+codex plugin marketplace add <path-to-local-codex-dev-forge-checkout>
 codex plugin marketplace upgrade codex-dev-forge
 ```
 

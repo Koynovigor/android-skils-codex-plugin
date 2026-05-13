@@ -96,7 +96,7 @@ Before release:
 - Update `CHANGELOG.md` under `$RELEASE_TAG` with changed plugins, bundled
   skills, and upgrade guidance.
 - Keep public install docs version-agnostic: use `latest`, `<release-tag>`, and
-  `https://github.com/Koynovigor/android-skils-codex-plugin/releases/latest`
+  `https://github.com/Koynovigor/codex-dev-forge/releases/latest`
   instead of hard-coding a specific version.
 - Preserve Apache-2.0 repository packaging license, Android skill metadata, and
   MIT licensing for bundled `agent-skills` and `adverse-review` content.
@@ -147,7 +147,7 @@ list, update behavior, and artifact contents.
 Verify latest-release install:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref latest
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref latest
 codex plugin marketplace upgrade codex-dev-forge
 ```
 
@@ -157,7 +157,7 @@ be installed or enabled.
 Verify pinned install from the release tag:
 
 ```bash
-codex plugin marketplace add Koynovigor/android-skils-codex-plugin --ref <release-tag>
+codex plugin marketplace add Koynovigor/codex-dev-forge --ref <release-tag>
 codex plugin marketplace upgrade codex-dev-forge
 ```
 
