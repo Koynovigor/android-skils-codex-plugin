@@ -1,6 +1,6 @@
 {
   "name": "android-xr-glimmer",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Android XR Display AI Glasses and Jetpack Compose Glimmer workflows for Codex.",
   "author": {
     "name": "Koynovigor",

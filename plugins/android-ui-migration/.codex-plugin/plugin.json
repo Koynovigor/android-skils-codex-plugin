@@ -1,6 +1,6 @@
 {
   "name": "android-ui-migration",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Android UI, Compose, Navigation, CameraX, and edge-to-edge migration workflows for Codex.",
   "author": {
     "name": "Koynovigor",

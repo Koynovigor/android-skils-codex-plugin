@@ -1,6 +1,51 @@
 # Changelog
 
-All notable changes for the Android Skills Codex marketplace are tracked here.
+All notable changes for the Codex Dev Forge marketplace are tracked here.
+
+## Unreleased
+
+Expands the marketplace from the `v0.0.5` Android-only release into the
+`codex-dev-forge` development plugin catalog.
+
+### Marketplace
+
+- Renames the marketplace id from `android-skills-codex` to
+  `codex-dev-forge` and the display name from `Android Skills for Codex` to
+  `Codex Dev Forge`.
+- Keeps the existing Android plugin split:
+  `android-cli-tools`, `android-build-and-release`, `android-ui-migration`, and
+  `android-xr-glimmer`.
+- Adds `agent-skills` and `adverse-review` as general development plugins.
+- Updates all bundled plugin manifests to version `0.1.0`.
+- Renames the generated release artifact to
+  `codex-dev-forge-marketplace.zip`.
+
+### Added Plugins And Skills
+
+- `agent-skills`, packaged from `../agent-skills`, adds 22 lifecycle
+  engineering skills, shared references, and `code-reviewer`,
+  `security-auditor`, and `test-engineer` persona prompts. The Codex package
+  maps upstream workflow guidance to Codex tools and uses risk-based specialist
+  review guidance for large, release, and security-sensitive work.
+- `adverse-review`, packaged from `../adverse`, adds adversarial
+  multi-perspective review for non-trivial PRs, release gates,
+  security-sensitive changes, large refactors, and critical-vulnerability
+  checks. It includes native Codex subagent orchestration guidance, a
+  single-agent degraded path when subagents are declined or unavailable, a
+  read-only CLI fallback, private review artifacts, uncommitted diff review
+  with reviewable untracked text files, strict reviewer JSON validation, and
+  deterministic report synthesis.
+
+### Packaging
+
+- Updates validator expectations to 6 plugins, 33 packaged skills, and 88
+  packaged reference files.
+- Updates install docs, release docs, and release workflow text for
+  `codex-dev-forge`.
+- Adds migration guidance for users moving from the old
+  `android-skills-codex` marketplace id to `codex-dev-forge`.
+- Keeps the release skills-only: no active `.app.json`, `.mcp.json`, hooks,
+  external authentication, or product gating are included.
 
 ## v0.0.5 - 2026-05-12
 

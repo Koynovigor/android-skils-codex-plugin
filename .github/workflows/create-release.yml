@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       upstream_alignment:
-        description: 'Result of upstream android/skills release alignment check'
+        description: 'Result of upstream Android Skills, Agent Skills, and Adverse alignment checks'
         required: true
         type: string
 
@@ -74,7 +74,7 @@ jobs:
         run: |
           git archive \
             --format=zip \
-            --output=android-skills-codex-marketplace.zip \
+            --output=codex-dev-forge-marketplace.zip \
             HEAD \
             .agents/plugins \
             plugins \
@@ -92,17 +92,17 @@ jobs:
           UPSTREAM_ALIGNMENT: ${{ inputs.upstream_alignment }}
         run: |
           {
-            echo "Android Skills Codex marketplace release ${TAG_NAME}."
+            echo "Codex Dev Forge marketplace release ${TAG_NAME}."
             echo
             echo "All bundled plugin manifests use version ${VERSION}."
             echo
-            echo "Upstream android/skills alignment:"
+            echo "Upstream alignment:"
             echo "- ${UPSTREAM_ALIGNMENT}"
             echo
             echo "Install the latest release channel:"
             echo '```bash'
             echo "codex plugin marketplace add ${REPOSITORY} --ref latest"
-            echo "codex plugin marketplace upgrade android-skills-codex"
+            echo "codex plugin marketplace upgrade codex-dev-forge"
             echo '```'
             echo
             echo "Install this pinned release:"
@@ -111,12 +111,16 @@ jobs:
             echo '```'
             echo
             echo "Plugins:"
+            echo "- agent-skills"
+            echo "- adverse-review"
             echo "- android-cli-tools"
             echo "- android-build-and-release"
             echo "- android-ui-migration"
             echo "- android-xr-glimmer"
             echo
             echo "Changed plugins and skills:"
+            echo "- agent-skills ${VERSION}: 22 lifecycle engineering skills and 3 specialist personas"
+            echo "- adverse-review ${VERSION}: adverse-review plus upstream Node CLI core"
             echo "- android-cli-tools ${VERSION}: android-cli-base"
             echo "- android-build-and-release ${VERSION}: agp-9-upgrade, play-billing-library-version-upgrade, perfetto-sql, r8-analyzer"
             echo "- android-ui-migration ${VERSION}: camera1-to-camerax, edge-to-edge, migrate-xml-views-to-jetpack-compose, navigation-3"
@@ -125,12 +129,12 @@ jobs:
             echo "Update behavior:"
             echo "- latest is the moving stable release ref updated by this workflow."
             echo "- Git tags such as ${TAG_NAME} are pinned install channels."
-            echo "- If installed from latest, CLI users only need codex plugin marketplace upgrade android-skills-codex."
+            echo "- If installed from latest, CLI users only need codex plugin marketplace upgrade codex-dev-forge."
             echo "- If installed from ${TAG_NAME}, change the Git ref to move to a newer pinned release."
             echo "- Codex App users can change the Git ref to move between latest and a pinned tag."
             echo
             echo "Artifact:"
-            echo "- android-skills-codex-marketplace.zip contains .agents/plugins, plugins, scripts, README.md, CHANGELOG.md, LICENSE.txt, and docs."
+            echo "- codex-dev-forge-marketplace.zip contains .agents/plugins, plugins, scripts, README.md, CHANGELOG.md, LICENSE.txt, and docs."
             echo
             echo "See CHANGELOG.md for the full release entry."
           } > release-notes.md
@@ -140,7 +144,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ inputs.tag_name }}
         run: |
-          gh release create "$TAG_NAME" android-skills-codex-marketplace.zip --title "Release $TAG_NAME" --notes-file release-notes.md --target main
+          gh release create "$TAG_NAME" codex-dev-forge-marketplace.zip --title "Release $TAG_NAME" --notes-file release-notes.md --target main
 
       - name: Update latest release ref
         run: |
