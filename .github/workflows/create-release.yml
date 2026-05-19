@@ -112,15 +112,17 @@ jobs:
             echo
             echo "Plugins:"
             echo "- android-cli-tools"
+            echo "- android-app-capabilities"
             echo "- android-build-and-release"
             echo "- android-ui-migration"
             echo "- android-xr-glimmer"
             echo
             echo "Changed plugins and skills:"
             echo "- android-cli-tools ${VERSION}: android-cli-base"
-            echo "- android-build-and-release ${VERSION}: agp-9-upgrade, play-billing-library-version-upgrade, perfetto-sql, r8-analyzer"
-            echo "- android-ui-migration ${VERSION}: camera1-to-camerax, edge-to-edge, migrate-xml-views-to-jetpack-compose, navigation-3"
-            echo "- android-xr-glimmer ${VERSION}: display-ai-glasses-with-jetpack-compose-glimmer"
+            echo "- android-app-capabilities ${VERSION}: appfunctions, engage-sdk-integration, verified-email"
+            echo "- android-build-and-release ${VERSION}: agp-9-upgrade, play-billing-library-version-upgrade, perfetto-sql, perfetto-trace-analysis, r8-analyzer, testing-setup"
+            echo "- android-ui-migration ${VERSION}: adaptive, camera1-to-camerax, edge-to-edge, migrate-xml-views-to-jetpack-compose, navigation-3, styles"
+            echo "- android-xr-glimmer ${VERSION}: display-glasses-with-jetpack-compose-glimmer"
             echo
             echo "Update behavior:"
             echo "- latest is the moving stable release ref updated by this workflow."

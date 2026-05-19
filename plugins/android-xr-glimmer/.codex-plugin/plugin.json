@@ -1,7 +1,7 @@
 {
   "name": "android-xr-glimmer",
-  "version": "0.0.5",
-  "description": "Android XR Display AI Glasses and Jetpack Compose Glimmer workflows for Codex.",
+  "version": "0.0.11",
+  "description": "Android XR display glasses and Jetpack Compose Glimmer workflows for Codex.",
   "author": {
     "name": "Koynovigor",
     "url": "https://github.com/Koynovigor"
@@ -9,18 +9,18 @@
   "homepage": "https://github.com/Koynovigor/android-skils-codex-plugin/blob/main/docs/codex-marketplace-install.md",
   "repository": "https://github.com/Koynovigor/android-skils-codex-plugin",
   "license": "Apache-2.0",
-  "keywords": ["android", "xr", "glimmer", "ai-glasses", "jetpack-compose"],
+  "keywords": ["android", "xr", "glimmer", "display-glasses", "jetpack-compose"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Android XR Glimmer",
     "shortDescription": "XR Glimmer guidance for Codex",
-    "longDescription": "Build projected Android XR experiences for Display AI Glasses using Jetpack Compose Glimmer guidelines, components, references, and input models.",
+    "longDescription": "Build projected Android XR experiences for display glasses using Jetpack Compose Glimmer guidelines, components, references, and input models.",
     "developerName": "Koynovigor",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://github.com/Koynovigor/android-skils-codex-plugin",
     "defaultPrompt": [
-      "Build an AI glasses Glimmer UI.",
+      "Build a display glasses Glimmer UI.",
       "Add a projected glasses activity.",
       "Review this Glimmer layout."
     ],

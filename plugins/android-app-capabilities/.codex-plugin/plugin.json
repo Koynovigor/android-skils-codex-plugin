@@ -1,0 +1,41 @@
+{
+  "name": "android-app-capabilities",
+  "version": "0.0.11",
+  "description": "Android app capability integrations for AppFunctions, verified email, and Play Engage SDK workflows for Codex.",
+  "author": {
+    "name": "Koynovigor",
+    "url": "https://github.com/Koynovigor"
+  },
+  "homepage": "https://github.com/Koynovigor/android-skils-codex-plugin/blob/main/docs/codex-marketplace-install.md",
+  "repository": "https://github.com/Koynovigor/android-skils-codex-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "android",
+    "appfunctions",
+    "device-ai",
+    "credential-manager",
+    "verified-email",
+    "play-engage"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Android App Capabilities",
+    "shortDescription": "AppFunctions, verified email, and Play Engage workflows",
+    "longDescription": "Expose Android app workflows through AppFunctions, implement verified email retrieval with Credential Manager and Digital Credentials, and integrate Play Engage SDK content surfaces using Android-focused guidance.",
+    "developerName": "Koynovigor",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Koynovigor/android-skils-codex-plugin",
+    "defaultPrompt": [
+      "Expose this Android workflow with AppFunctions.",
+      "Implement verified email with Credential Manager.",
+      "Integrate Play Engage SDK for this app."
+    ],
+    "brandColor": "#F4B400",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

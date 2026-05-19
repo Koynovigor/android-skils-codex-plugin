@@ -25,8 +25,8 @@ scripts/validate-codex-plugins.sh
 Confirm the legacy root layout is absent:
 
 ```bash
-for path in android-cli build camera devtools jetpack-compose navigation performance play profilers system xr; do
-  test ! -e "$path" || { echo "Legacy root path still exists: $path"; exit 1; }
+for skill_root in android-cli build camera device-ai devtools identity jetpack-compose navigation performance play profilers system testing xr; do
+  test ! -e "$skill_root" || { echo "Legacy root path still exists: $skill_root"; exit 1; }
 done
 ```
 
@@ -37,7 +37,7 @@ find plugins -name SKILL.md | wc -l
 find plugins -path '*/references/*' -type f | wc -l
 ```
 
-The current marketplace contains 10 packaged skills and 83 packaged reference
+The current marketplace contains 17 packaged skills and 148 packaged reference
 files. If that package shape changes, update the validator, changelog, and
 release notes together.
 
@@ -124,7 +124,7 @@ codex plugin marketplace upgrade android-skills-codex
 Then type `/plugins`, choose `Android Skills for Codex`, and verify the target
 plugin can be installed or enabled.
 
-In Codex App, verify `/plugins` shows `Android Skills for Codex`, all four
+In Codex App, verify `/plugins` shows `Android Skills for Codex`, all five
 plugins are installable, and a new thread can use the installed skills.
 
 ## Current Runtime Validation Gap

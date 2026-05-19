@@ -6,7 +6,7 @@
 [![Codex Marketplace](https://img.shields.io/badge/Codex-marketplace-10A37F)](.agents/plugins/marketplace.json)
 
 This repository packages Android Skills as a GitHub-backed marketplace for Codex
-App and Codex CLI. It exposes one marketplace, `android-skills-codex`, with four
+App and Codex CLI. It exposes one marketplace, `android-skills-codex`, with five
 installable Codex plugins.
 
 Current releases are skills-only distributions: no apps, MCP servers, hooks,
@@ -77,25 +77,33 @@ new thread before using that plugin's skills.
 
 ## Plugin Catalog
 
-| Plugin                      | Bundled skills                                                                               |
-|-----------------------------|----------------------------------------------------------------------------------------------|
-| `android-cli-tools`         | `android-cli-base`                                                                           |
-| `android-build-and-release` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `perfetto-sql`, `r8-analyzer`       |
-| `android-ui-migration`      | `camera1-to-camerax`, `edge-to-edge`, `migrate-xml-views-to-jetpack-compose`, `navigation-3` |
-| `android-xr-glimmer`        | `display-ai-glasses-with-jetpack-compose-glimmer`                                            |
+| Plugin                      | Bundled skills                                                                                                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `android-cli-tools`         | `android-cli-base`                                                                                                                                  |
+| `android-app-capabilities`  | `appfunctions`, `engage-sdk-integration`, `verified-email`                                                                                          |
+| `android-build-and-release` | `agp-9-upgrade`, `play-billing-library-version-upgrade`, `perfetto-sql`, `perfetto-trace-analysis`, `r8-analyzer`, `testing-setup`                 |
+| `android-ui-migration`      | `adaptive`, `camera1-to-camerax`, `edge-to-edge`, `migrate-xml-views-to-jetpack-compose`, `navigation-3`, `styles`                                  |
+| `android-xr-glimmer`        | `display-glasses-with-jetpack-compose-glimmer`                                                                                                      |
 
-| Skill                                             | Plugin                      | Purpose                                                                                                                                                    |
-|---------------------------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `android-cli-base`                                | `android-cli-tools`         | Android CLI workflows for project creation, SDK and emulator management, device interaction, screenshots, layout inspection, docs lookup, and diagnostics. |
-| `agp-9-upgrade`                                   | `android-build-and-release` | Android Gradle Plugin 9 migration guidance.                                                                                                                |
-| `play-billing-library-version-upgrade`            | `android-build-and-release` | Google Play Billing Library migration guidance.                                                                                                            |
-| `perfetto-sql`                                    | `android-build-and-release` | Perfetto SQL query guidance for Android trace analysis with `trace_processor`.                                                                              |
-| `r8-analyzer`                                     | `android-build-and-release` | R8 and ProGuard keep-rule analysis.                                                                                                                        |
-| `camera1-to-camerax`                              | `android-ui-migration`      | Camera1 or raw Camera2 migration to CameraX.                                                                                                               |
-| `edge-to-edge`                                    | `android-ui-migration`      | Edge-to-edge Compose insets and system UI migration.                                                                                                       |
-| `migrate-xml-views-to-jetpack-compose`            | `android-ui-migration`      | XML View to Jetpack Compose migration workflow.                                                                                                            |
-| `navigation-3`                                    | `android-ui-migration`      | Navigation 3 migration and recipes.                                                                                                                        |
-| `display-ai-glasses-with-jetpack-compose-glimmer` | `android-xr-glimmer`        | Android XR Display AI Glasses UI with Jetpack Compose Glimmer.                                                                                             |
+| Skill                                           | Plugin                      | Purpose                                                                                                                                                    |
+|-------------------------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `android-cli-base`                              | `android-cli-tools`         | Android CLI workflows for project creation, SDK and emulator management, device interaction, screenshots, layout inspection, docs lookup, and diagnostics. |
+| `appfunctions`                                  | `android-app-capabilities`  | Android AppFunctions discovery, implementation, and KDoc refinement for on-device agents and system shortcuts.                                             |
+| `engage-sdk-integration`                        | `android-app-capabilities`  | Play Engage SDK integration, publishing code generation, entity mapping, and SDK issue resolution.                                                         |
+| `verified-email`                                | `android-app-capabilities`  | Verified email retrieval with Credential Manager and Digital Credentials.                                                                                  |
+| `agp-9-upgrade`                                 | `android-build-and-release` | Android Gradle Plugin 9 migration guidance.                                                                                                                |
+| `play-billing-library-version-upgrade`          | `android-build-and-release` | Google Play Billing Library migration guidance.                                                                                                            |
+| `perfetto-sql`                                  | `android-build-and-release` | Perfetto SQL query guidance for Android trace analysis with `trace_processor`.                                                                              |
+| `perfetto-trace-analysis`                       | `android-build-and-release` | Perfetto trace analysis for latency, memory, and jank investigations.                                                                                      |
+| `r8-analyzer`                                   | `android-build-and-release` | R8 and ProGuard keep-rule analysis.                                                                                                                        |
+| `testing-setup`                                 | `android-build-and-release` | Android unit, UI, screenshot, and end-to-end test infrastructure setup.                                                                                    |
+| `adaptive`                                      | `android-ui-migration`      | Adaptive Compose UI for phones, tablets, foldables, desktop, TV, Auto, and XR.                                                                             |
+| `camera1-to-camerax`                            | `android-ui-migration`      | Camera1 or raw Camera2 migration to CameraX.                                                                                                               |
+| `edge-to-edge`                                  | `android-ui-migration`      | Edge-to-edge Compose insets and system UI migration.                                                                                                       |
+| `migrate-xml-views-to-jetpack-compose`          | `android-ui-migration`      | XML View to Jetpack Compose migration workflow.                                                                                                            |
+| `navigation-3`                                  | `android-ui-migration`      | Navigation 3 migration and recipes.                                                                                                                        |
+| `styles`                                        | `android-ui-migration`      | Experimental Compose Styles API integration for styleable design system components.                                                                        |
+| `display-glasses-with-jetpack-compose-glimmer`  | `android-xr-glimmer`        | Android XR display glasses UI with Jetpack Compose Glimmer.                                                                                                |
 
 ## Update Behavior
 
@@ -140,6 +148,7 @@ Use the narrower path set when the UI or CLI asks for explicit plugin subpaths:
 ```text
 .agents/plugins
 plugins/android-cli-tools
+plugins/android-app-capabilities
 plugins/android-build-and-release
 plugins/android-ui-migration
 plugins/android-xr-glimmer

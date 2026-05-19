@@ -49,10 +49,10 @@ jobs:
           # Export the branch into a temp folder. This avoids index errors.
           git archive FETCH_HEAD | tar -x -C "$source_root"
 
-          for path in android-cli build camera jetpack-compose navigation performance play system xr; do
-            if [ -d "$source_root/$path" ]; then
-              rm -rf "$upstream_root/$path"
-              cp -R "$source_root/$path" "$upstream_root/$path"
+          for skill_root in android-cli build camera device-ai devtools identity jetpack-compose navigation performance play profilers system testing xr; do
+            if [ -d "$source_root/$skill_root" ]; then
+              rm -rf "$upstream_root/$skill_root"
+              cp -R "$source_root/$skill_root" "$upstream_root/$skill_root"
             fi
           done
 
