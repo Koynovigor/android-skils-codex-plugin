@@ -4,20 +4,20 @@ All notable changes for the Codex Dev Forge marketplace are tracked here.
 
 ## Unreleased
 
-Expands the marketplace from the `v0.0.5` Android-only release into the
+Merges the Android Skills upstream `v0.0.11` refresh into the current
 `codex-dev-forge` development plugin catalog.
 
 ### Marketplace
 
-- Renames the marketplace id from `android-skills-codex` to
-  `codex-dev-forge` and the display name from `Android Skills for Codex` to
+- Keeps the marketplace id `codex-dev-forge` and display name
   `Codex Dev Forge`.
-- Keeps the existing Android plugin split:
-  `android-cli-tools`, `android-build-and-release`, `android-ui-migration`, and
+- Keeps `agent-skills` and `adverse-review` as general development plugins.
+- Expands the Android plugin split to:
+  `android-cli-tools`, `android-app-capabilities`,
+  `android-build-and-release`, `android-ui-migration`, and
   `android-xr-glimmer`.
-- Adds `agent-skills` and `adverse-review` as general development plugins.
-- Updates all bundled plugin manifests to version `0.1.0`.
-- Renames the generated release artifact to
+- Updates all bundled plugin manifests to version `0.2.0`.
+- Keeps the generated release artifact named
   `codex-dev-forge-marketplace.zip`.
 
 ### Added Plugins And Skills
@@ -35,13 +35,34 @@ Expands the marketplace from the `v0.0.5` Android-only release into the
   read-only CLI fallback, private review artifacts, uncommitted diff review
   with reviewable untracked text files, strict reviewer JSON validation, and
   deterministic report synthesis.
+- `android-app-capabilities` adds Android app-level integration workflows:
+  `appfunctions`, `engage-sdk-integration`, and `verified-email`.
+
+### Android Upstream Alignment
+
+- Upstream release tag: `android/skills` `v0.0.11`, published on 2026-05-17.
+- Upstream release body: `Manual release of main branch contents.`
+- Upstream `v0.0.5...v0.0.11` includes commits from 2026-05-13 through
+  2026-05-17. Tags `v0.0.6` and `v0.0.7` point at the same upstream commit.
+- Added seven upstream Android skills: `appfunctions`, `verified-email`,
+  `adaptive`, `styles`, `engage-sdk-integration`,
+  `perfetto-trace-analysis`, and `testing-setup`.
+- Renamed the XR skill from `display-ai-glasses-with-jetpack-compose-glimmer`
+  to `display-glasses-with-jetpack-compose-glimmer`.
+- Refreshed `navigation-3`, `r8-analyzer`, `perfetto-sql`, and XR Glimmer
+  guidance and references.
+- Replaced the old Perfetto SQL `perfetto-stdlib-docs.md` reference with
+  upstream `perfetto-stdlib.md`.
 
 ### Packaging
 
-- Updates validator expectations to 6 plugins, 33 packaged skills, and 88
+- Updated the sync script to copy all upstream Android roots needed by
+  `v0.0.11`: `device-ai`, `devtools`, `identity`, `profilers`, and
+  `testing`.
+- Updates validator expectations to 7 plugins, 40 packaged skills, and 153
   packaged reference files.
-- Updates install docs, release docs, and release workflow text for
-  `codex-dev-forge`.
+- Updates install docs, release docs, and release workflow text for the
+  combined `codex-dev-forge` catalog.
 - Adds migration guidance for users moving from the old
   `android-skills-codex` marketplace id to `codex-dev-forge`.
 - Keeps the release skills-only: no active `.app.json`, `.mcp.json`, hooks,

@@ -1,6 +1,6 @@
 {
   "name": "agent-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Production-grade engineering workflow skills for Codex, covering the full development lifecycle from idea refinement to launch.",
   "author": {
     "name": "Addy Osmani",

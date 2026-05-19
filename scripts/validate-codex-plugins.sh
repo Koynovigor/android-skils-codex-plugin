@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MARKETPLACE="$ROOT/.agents/plugins/marketplace.json"
 PLUGINS=(
   android-cli-tools
+  android-app-capabilities
   android-build-and-release
   android-ui-migration
   android-xr-glimmer
@@ -15,13 +16,16 @@ LEGACY_ROOTS=(
   android-cli
   build
   camera
+  device-ai
   devtools
+  identity
   jetpack-compose
   navigation
   performance
   play
   profilers
   system
+  testing
   xr
 )
 
@@ -57,7 +61,7 @@ fi
 jq -e '
   .name == "codex-dev-forge" and
   .interface.displayName and
-  (.plugins | length == 6)
+  (.plugins | length == 7)
 ' "$MARKETPLACE" >/dev/null
 
 for plugin in "${PLUGINS[@]}"; do
@@ -191,13 +195,13 @@ if [[ -n "$unexpected_plugin_configs" ]]; then
 fi
 
 skill_count="$(find "$ROOT/plugins" -name SKILL.md | wc -l | tr -d '[:space:]')"
-if [[ "$skill_count" != "33" ]]; then
-  fail "Expected 33 packaged skills, found $skill_count"
+if [[ "$skill_count" != "40" ]]; then
+  fail "Expected 40 packaged skills, found $skill_count"
 fi
 
 reference_count="$(find "$ROOT/plugins" -path '*/references/*' -type f | wc -l | tr -d '[:space:]')"
-if [[ "$reference_count" != "88" ]]; then
-  fail "Expected 88 packaged reference files, found $reference_count"
+if [[ "$reference_count" != "153" ]]; then
+  fail "Expected 153 packaged reference files, found $reference_count"
 fi
 
 while IFS= read -r -d '' skill_file; do
@@ -267,6 +271,15 @@ fi
 grep_file "$ROOT/plugins/android-cli-tools/skills/android-cli-base/SKILL.md" \
   'Android CLI workflows' \
   "android-cli-base description must front-load Android CLI workflows"
+grep_file "$ROOT/plugins/android-app-capabilities/skills/appfunctions/SKILL.md" \
+  'AppFunctions|on-device' \
+  "appfunctions must mention AppFunctions or on-device workflows"
+grep_file "$ROOT/plugins/android-app-capabilities/skills/verified-email/SKILL.md" \
+  'verified email|Credential Manager|Digital Credentials' \
+  "verified-email must mention verified email, Credential Manager, or Digital Credentials"
+grep_file "$ROOT/plugins/android-app-capabilities/skills/engage-sdk-integration/SKILL.md" \
+  'Play Engage SDK|Engage SDK' \
+  "engage-sdk-integration must mention Play Engage SDK"
 grep_file "$ROOT/plugins/android-build-and-release/skills/agp-9-upgrade/SKILL.md" \
   'AGP 9|Android Gradle Plugin' \
   "agp-9-upgrade must mention AGP 9 migration"
@@ -279,9 +292,27 @@ grep_file "$ROOT/plugins/android-build-and-release/skills/r8-analyzer/SKILL.md" 
 grep_file "$ROOT/plugins/android-build-and-release/skills/perfetto-sql/SKILL.md" \
   'Perfetto SQL|trace_processor|Android Perfetto' \
   "perfetto-sql must mention Perfetto SQL, trace_processor, or Android Perfetto"
+grep_file "$ROOT/plugins/android-build-and-release/skills/perfetto-sql/SKILL.md" \
+  'Codex security guardrail.*explicitly approved this live download and execution' \
+  "perfetto-sql must require explicit approval before live trace_processor download and execution"
+grep_file "$ROOT/plugins/android-build-and-release/skills/perfetto-trace-analysis/SKILL.md" \
+  'Perfetto traces|trace analysis|latency|jank' \
+  "perfetto-trace-analysis must mention Perfetto traces, trace analysis, latency, or jank"
+grep_file "$ROOT/plugins/android-build-and-release/skills/perfetto-trace-analysis/references/sql.md" \
+  'Codex security guardrail.*explicitly approved this live download and execution' \
+  "perfetto-trace-analysis SQL reference must require explicit approval before live trace_processor download and execution"
+grep_file "$ROOT/plugins/android-build-and-release/skills/testing-setup/SKILL.md" \
+  'testing strategy|unit tests|UI tests|screenshot tests' \
+  "testing-setup must mention Android testing strategy or test types"
 grep_file "$ROOT/plugins/android-ui-migration/skills/edge-to-edge/SKILL.md" \
   'edge-to-edge Compose insets' \
   "edge-to-edge description must front-load edge-to-edge Compose insets"
+grep_file "$ROOT/plugins/android-ui-migration/skills/adaptive/SKILL.md" \
+  'adaptive|MediaQuery|Grid|FlexBox' \
+  "adaptive must mention adaptive UI, MediaQuery, Grid, or FlexBox"
+grep_file "$ROOT/plugins/android-ui-migration/skills/styles/SKILL.md" \
+  'Compose Styles API|Modifier.styleable|styleable' \
+  "styles must mention Compose Styles API or styleable components"
 grep_file "$ROOT/plugins/android-ui-migration/skills/migrate-xml-views-to-jetpack-compose/SKILL.md" \
   'XML View.*Compose|XML layout.*Compose|XML View to Jetpack' \
   "migrate-xml-views-to-jetpack-compose must mention XML View to Compose migration"
@@ -297,9 +328,9 @@ grep_file "$ROOT/plugins/android-ui-migration/skills/camera1-to-camerax/SKILL.md
 grep_file "$ROOT/plugins/android-ui-migration/skills/camera1-to-camerax/SKILL.md" \
   'CameraX' \
   "camera1-to-camerax must mention CameraX"
-grep_file "$ROOT/plugins/android-xr-glimmer/skills/display-ai-glasses-with-jetpack-compose-glimmer/SKILL.md" \
-  'Android XR|Display AI Glasses|Glimmer' \
-  "xr glimmer skill must mention Android XR, Display AI Glasses, or Glimmer"
+grep_file "$ROOT/plugins/android-xr-glimmer/skills/display-glasses-with-jetpack-compose-glimmer/SKILL.md" \
+  'Android XR|display glasses|Glimmer' \
+  "xr glimmer skill must mention Android XR, display glasses, or Glimmer"
 grep_file "$ROOT/plugins/agent-skills/skills/using-agent-skills/SKILL.md" \
   'Codex Adaptation' \
   "using-agent-skills must include Codex adaptation guidance"

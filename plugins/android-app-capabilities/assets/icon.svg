@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+    <title>Android App Capabilities</title>
+    <defs>
+        <linearGradient id="bg" x1="88" y1="424" x2="424" y2="88" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#4B2E04" />
+            <stop offset="1" stop-color="#F4B400" />
+        </linearGradient>
+    </defs>
+    <rect width="512" height="512" rx="112" fill="url(#bg)" />
+    <circle cx="256" cy="256" r="132" fill="#221502" opacity="0.72" />
+    <path d="M256 124V388" fill="none" stroke="#FFF7D0" stroke-linecap="round" stroke-width="24" />
+    <path d="M124 256H388" fill="none" stroke="#FFF7D0" stroke-linecap="round" stroke-width="24" />
+    <path d="M164 164L348 348" fill="none" stroke="#FFE082" stroke-linecap="round" stroke-width="20" />
+    <path d="M348 164L164 348" fill="none" stroke="#FFE082" stroke-linecap="round" stroke-width="20" />
+    <circle cx="256" cy="124" r="34" fill="#FFF7D0" />
+    <circle cx="388" cy="256" r="34" fill="#FFF7D0" />
+    <circle cx="256" cy="388" r="34" fill="#FFF7D0" />
+    <circle cx="124" cy="256" r="34" fill="#FFF7D0" />
+    <circle cx="256" cy="256" r="48" fill="#F4B400" stroke="#FFF7D0" stroke-width="10" />
+</svg>

@@ -60,15 +60,17 @@ Codex marketplace. It is not an Android application project.
 ## Repository Layout Rules
 
 - The root Android skill directories are temporary migration inputs only:
-  `android-cli/`, `build/`, `camera/`, `devtools/`, `jetpack-compose/`, `navigation/`,
-  `performance/`, `play/`, `profilers/`, `system/`, and `xr/`.
+  `android-cli/`, `build/`, `camera/`, `device-ai/`, `devtools/`, `identity/`,
+  `jetpack-compose/`, `navigation/`, `performance/`, `play/`, `profilers/`,
+  `system/`, `testing/`, and `xr/`.
 - The final release layout must remove those legacy root directories after their contents are
   packaged and validated under `plugins/*/skills/`.
 - Codex distribution files live in `.agents/plugins/`, `plugins/`, `scripts/`, and `docs/`; after
   cleanup these are the repository source of truth.
 - Keep the marketplace split from `PLAN.md` unless the plan is deliberately revised:
-  `agent-skills`, `android-cli-tools`, `android-build-and-release`,
-  `adverse-review`, `android-ui-migration`, and `android-xr-glimmer`.
+  `android-cli-tools`, `android-app-capabilities`, `android-build-and-release`,
+  `android-ui-migration`, `android-xr-glimmer`, `agent-skills`, and
+  `adverse-review`.
 - Packaged skills under `plugins/*/skills/` must preserve their `references/` directories and
   relative links.
 - The `agent-skills` plugin is packaged from `../agent-skills` and must preserve upstream MIT
@@ -164,7 +166,7 @@ Run commands from the repository root.
 - Check packaged references:
   - `find plugins -path '*/references/*' -type f | wc -l`
 - Check legacy Android root layout is absent before release:
-  - `for path in android-cli build camera devtools jetpack-compose navigation performance play profilers system xr; do test ! -e "$path" || { echo "Legacy root path still exists: $path"; exit 1; }; done`
+  - `for skill_root in android-cli build camera device-ai devtools identity jetpack-compose navigation performance play profilers system testing xr; do test ! -e "$skill_root" || { echo "Legacy root path still exists: $skill_root"; exit 1; }; done`
 - Check for release-facing placeholders:
   - `rg -n "TODO|TBD|FIXME" plugins .agents README.md docs -g '!plugins/**/references/**' || true`
 - Check that the generic packaged skill name is gone:

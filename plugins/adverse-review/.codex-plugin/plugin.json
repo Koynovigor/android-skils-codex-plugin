@@ -1,6 +1,6 @@
 {
   "name": "adverse-review",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Adversarial multi-perspective code review for Codex using three focused reviewer lenses and deterministic Node.js synthesis.",
   "author": {
     "name": "Addy Osmani",

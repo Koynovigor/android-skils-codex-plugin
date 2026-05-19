@@ -63,6 +63,7 @@ plugin directory:
 plugins/agent-skills
 plugins/adverse-review
 plugins/android-cli-tools
+plugins/android-app-capabilities
 plugins/android-build-and-release
 plugins/android-ui-migration
 plugins/android-xr-glimmer
@@ -71,7 +72,7 @@ plugins/android-xr-glimmer
 After adding the marketplace:
 
 1. Choose `Codex Dev Forge`.
-2. Verify that all six plugins are visible.
+2. Verify that all seven plugins are visible.
 3. Install each plugin you need.
 4. Start a new thread after installing a plugin so the enabled skills are loaded.
 5. Restart Codex if marketplace or plugin changes are not visible.
@@ -80,7 +81,7 @@ After adding the marketplace:
 
 The old marketplace id was `android-skills-codex`. The current marketplace id
 is `codex-dev-forge`, so existing Codex App users should add or update this
-repository with Git ref `latest`, verify that `Codex Dev Forge` shows all six
+repository with Git ref `latest`, verify that `Codex Dev Forge` shows all seven
 plugins, and install the needed plugins from the new marketplace. After that,
 remove or disable the old `Android Skills for Codex` entry from the Plugins UI
 if it is still listed.
@@ -114,9 +115,10 @@ cache and newly enabled skills are refreshed.
 | `agent-skills` | General engineering workflows for specs, plans, implementation, tests, review, hardening, performance, docs, Git, CI/CD, migrations, and launch. |
 | `adverse-review` | Adversarial multi-perspective code review for non-trivial PRs, release gates, security-sensitive changes, and critical-vulnerability checks; CLI use is a fallback. |
 | `android-cli-tools` | Android CLI workflows for Codex. |
-| `android-build-and-release` | AGP, Play Billing Library, R8, and Perfetto workflows. |
-| `android-ui-migration` | Compose, Navigation, CameraX, and edge-to-edge migrations. |
-| `android-xr-glimmer` | Android XR Glimmer guidance for Display AI Glasses. |
+| `android-app-capabilities` | AppFunctions, verified email, and Play Engage SDK integration workflows. |
+| `android-build-and-release` | AGP, Android testing, Play Billing Library, R8, and Perfetto workflows. |
+| `android-ui-migration` | Compose adaptive UI, Compose Styles, Navigation, CameraX, and edge-to-edge workflows. |
+| `android-xr-glimmer` | Android XR Glimmer guidance for display glasses. |
 
 ## Trigger Test Prompts
 
@@ -133,15 +135,22 @@ Run an adverse review of my uncommitted changes.
 Review this branch against main from correctness, security, and maintainability angles.
 Run a critical-vulnerability adverse review before release.
 Use Android CLI to inspect this project.
+Expose this Android workflow with AppFunctions.
+Implement verified email with Credential Manager.
+Integrate Play Engage SDK for this app.
 Migrate this project to AGP 9.
 Upgrade Play Billing Library to the latest stable version.
 Analyze this project's R8 keep rules.
 Analyze this Perfetto trace with Perfetto SQL.
+Analyze this Perfetto trace for jank.
+Set up Android testing for this app.
+Make this Compose UI adaptive.
+Integrate the Compose Styles API.
 Add edge-to-edge support to this Compose app.
 Migrate this XML layout to Jetpack Compose.
 Migrate this app to Navigation 3.
 Migrate this Camera1 implementation to CameraX.
-Build an Android XR Glimmer UI for Display AI Glasses.
+Build an Android XR Glimmer UI for display glasses.
 ```
 
 ## Update Behavior
@@ -183,6 +192,8 @@ only marketplace-relevant files:
 
 ## Repository Layout Note
 
-This repository is a Codex marketplace repository, not a duplicated upstream
-skills mirror. Codex distribution files live in `.agents/plugins/`, `plugins/`,
-`scripts/`, and `docs/`.
+This repository is a Codex marketplace repository, not a duplicated Android
+Skills mirror. Codex distribution files live in `.agents/plugins/`, `plugins/`,
+`scripts/`, and `docs/`. Legacy root skill directories such as `android-cli/`,
+`build/`, `device-ai/`, `identity/`, `testing/`, and `xr/` are not install
+paths and must stay absent from the release layout.
