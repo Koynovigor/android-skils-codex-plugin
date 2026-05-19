@@ -16,8 +16,7 @@ Merges the Android Skills upstream `v0.0.11` refresh into the current
   `android-cli-tools`, `android-app-capabilities`,
   `android-build-and-release`, `android-ui-migration`, and
   `android-xr-glimmer`.
-- Keeps all bundled plugin manifests on version `0.1.0` until a deliberate
-  release-version bump is made.
+- Updates all bundled plugin manifests to version `0.2.0`.
 - Keeps the generated release artifact named
   `codex-dev-forge-marketplace.zip`.
 

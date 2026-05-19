@@ -19,8 +19,8 @@ marketplace.
   `android-cli-tools`, `android-app-capabilities`,
   `android-build-and-release`, `android-ui-migration`,
   `android-xr-glimmer`, `agent-skills`, and `adverse-review`.
-- Keep current release manifests on the Codex Dev Forge version line
-  (`0.1.0`) until a deliberate release-version bump is made.
+- Update all bundled plugin manifests to the Codex Dev Forge release version
+  `0.2.0`.
 - Keep the release skills-only: no `.app.json`, `.mcp.json`, active hooks,
   external authentication, logos, or product gating.
 
@@ -65,6 +65,16 @@ marketplace.
 - Passed after conflict resolution: local P0/P1 review of staged marketplace,
   release workflow, docs, plugin manifest versions, validator guards, and
   package counts found no release-blocking issue.
+- Passed after version bump to `0.2.0`: all seven
+  `plugins/*/.codex-plugin/plugin.json` files report version `0.2.0`.
+- Passed after version bump to `0.2.0`:
+  `jq . plugins/*/.codex-plugin/plugin.json >/dev/null`.
+- Passed after version bump to `0.2.0`: `scripts/validate-codex-plugins.sh`.
+- Passed after version bump to `0.2.0`: scan of plugin manifests,
+  `CHANGELOG.md`, `PLAN.md`, `docs`, `README.md`, and release workflow found
+  `0.2.0` in the expected active version locations and no stale `0.1.0`
+  references.
+- Passed after version bump to `0.2.0`: `git diff --check`.
 
 ## Risks And Notes
 
