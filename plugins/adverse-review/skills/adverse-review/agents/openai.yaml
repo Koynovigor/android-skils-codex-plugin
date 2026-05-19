@@ -1,0 +1,7 @@
+interface:
+  display_name: "Adverse Review"
+  short_description: "Adversarial panel review for non-trivial changes"
+  default_prompt: "Run an adverse review of my uncommitted changes."
+
+policy:
+  allow_implicit_invocation: true

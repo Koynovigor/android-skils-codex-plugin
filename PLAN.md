@@ -1,97 +1,88 @@
-# Android Skills v0.0.11 Refresh Plan
+# Codex Dev Forge Android v0.0.11 Merge Plan
 
 ## Active Milestone
 
-Refresh this Android Skills Codex marketplace from upstream `android/skills`
-`v0.0.5` to upstream tag `v0.0.11`.
+Resolve PR #4 merge conflicts by bringing the Android Skills upstream
+`v0.0.11` refresh from `dev` into the current `main`-line Codex Dev Forge
+marketplace.
 
 ## Decisions
 
-- Use upstream tag `v0.0.11` (`2496da2`) as the sync source, not upstream
-  `main`, because `main` currently contains commits after the release tag.
-- Preserve the existing Android marketplace id `android-skills-codex`.
-- Revise the Android plugin split from four to five plugins:
-  `android-cli-tools`, `android-app-capabilities`,
-  `android-build-and-release`, `android-ui-migration`, and
-  `android-xr-glimmer`.
-- Add `android-app-capabilities` for Android app-level integrations:
-  `appfunctions`, `verified-email`, and `engage-sdk-integration`.
-- Keep `android-cli-base` as the packaged name for upstream
-  `devtools/android-cli`.
-- Rename the packaged XR skill to upstream
-  `display-glasses-with-jetpack-compose-glimmer`; do not keep the old
-  `display-ai-glasses-with-jetpack-compose-glimmer` copy.
-- Keep the release skills-only: no `.app.json`, `.mcp.json`, hooks, external
-  authentication, logos, or product gating.
-
-## Upstream Changes Since v0.0.5
-
-- Added `device-ai/appfunctions`.
-- Added `identity/verified-email`.
-- Added `jetpack-compose/adaptive`.
-- Added `jetpack-compose/theming/styles`.
-- Added `play/engage-sdk-integration`.
-- Added `profilers/perfetto-trace-analysis`.
-- Added `testing/testing-setup`.
-- Renamed XR skill path and frontmatter from
-  `display-ai-glasses-with-jetpack-compose-glimmer` to
+- Keep the marketplace id and display name from `main`:
+  `codex-dev-forge` / `Codex Dev Forge`.
+- Keep the general development plugins from `main`: `agent-skills` and
+  `adverse-review`.
+- Keep the Android upstream `v0.0.11` refresh from `dev`, including the new
+  `android-app-capabilities` plugin and the renamed XR skill
   `display-glasses-with-jetpack-compose-glimmer`.
-- Updated `navigation-3`, `r8-analyzer`, `perfetto-sql`, and XR Glimmer
-  references.
-- Replaced the old Perfetto SQL `perfetto-stdlib-docs.md` reference with
-  upstream `perfetto-stdlib.md`.
+- Final marketplace split after the merge:
+  `android-cli-tools`, `android-app-capabilities`,
+  `android-build-and-release`, `android-ui-migration`,
+  `android-xr-glimmer`, `agent-skills`, and `adverse-review`.
+- Keep current release manifests on the Codex Dev Forge version line
+  (`0.1.0`) until a deliberate release-version bump is made.
+- Keep the release skills-only: no `.app.json`, `.mcp.json`, active hooks,
+  external authentication, logos, or product gating.
 
 ## Expected Package Shape
 
-- Marketplace plugins: 5.
-- Packaged Android skills: 17.
-- Packaged Android reference files: 148.
-- Plugin manifest version for this refresh: `0.0.11`.
+- Marketplace plugins: 7.
+- Packaged skills: 40.
+- Packaged reference files: 153.
 
 ## Validation Evidence
 
-- Passed: `gh release view v0.0.11 --repo android/skills --json name,tagName,publishedAt,body`
-  returned upstream release body `Manual release of main branch contents.` and
-  `publishedAt` `2026-05-17T15:18:29Z`.
-- Passed: `SOURCE_ROOT=/private/tmp/android-skills-upstream-v0011 scripts/sync-codex-plugins.sh`.
-- Passed: `jq . .agents/plugins/marketplace.json`.
-- Passed: `jq . plugins/*/.codex-plugin/plugin.json`.
-- Passed: `scripts/validate-codex-plugins.sh`.
-- Passed after Perfetto guardrail fix: `scripts/validate-codex-plugins.sh`.
-- Passed: `find plugins -name SKILL.md | wc -l` returned `17`.
-- Passed: `find plugins -path '*/references/*' -type f | wc -l` returned `148`.
-- Passed: legacy root absence check for `android-cli`, `build`, `camera`,
-  `device-ai`, `devtools`, `identity`, `jetpack-compose`, `navigation`,
-  `performance`, `play`, `profilers`, `system`, `testing`, and `xr`.
-- Passed: release-facing placeholder scan over `plugins`, `.agents`,
-  `README.md`, and `docs` excluding packaged references returned no matches.
-- Passed: `rg -n "^name: base$" plugins || true` returned no matches.
-- Passed: `git diff --check`.
-- Passed: `bash -n scripts/sync-codex-plugins.sh scripts/validate-codex-plugins.sh`.
-- Passed: symlink scan over `plugins`, `.agents`, `scripts`, and `docs`
-  returned no symlinks.
-- Passed: SocratiCode `codebase_update` re-indexed the changed package.
-- Passed: SocratiCode dependency graph reported 2 shell files, 0 edges, and
-  0 circular dependency chains.
-- Passed: read-only P0/P1 correctness and release-safety reviewer reported no
-  P0/P1 findings after checking marketplace shape, `0.0.11` manifests, sync
-  mappings, renamed XR skill, docs, workflow release notes, counts, and legacy
-  root absence.
-- Passed: security re-review reported no remaining P0/P1 security or
-  release-safety findings. The previous High supply-chain finding is resolved
-  for a skills-only marketplace package because both Perfetto paths now require
-  current-thread approval and disclose the unpinned lazy-loaded binary behavior.
+- Passed before conflict resolution: SocratiCode `codebase_status` reported a
+  green index, active watcher, 718 indexed chunks, and code graph availability.
+- Passed before conflict resolution: official OpenAI Codex plugin docs MCP
+  confirmed `.codex-plugin/plugin.json` as the required plugin manifest,
+  `.agents/plugins/marketplace.json` as the repo marketplace location, plugin
+  root layout rules, and required marketplace entry fields.
+- Passed after conflict resolution: `jq . .agents/plugins/marketplace.json`.
+- Passed after conflict resolution: `jq . plugins/*/.codex-plugin/plugin.json`.
+- Passed after conflict resolution: `scripts/validate-codex-plugins.sh`.
+- Passed after conflict resolution: `find plugins -name SKILL.md | wc -l`
+  returned `40`.
+- Passed after conflict resolution:
+  `find plugins -path '*/references/*' -type f | wc -l` returned `153`.
+- Passed after conflict resolution: legacy Android root absence check for
+  `android-cli`, `build`, `camera`, `device-ai`, `devtools`, `identity`,
+  `jetpack-compose`, `navigation`, `performance`, `play`, `profilers`,
+  `system`, `testing`, and `xr`.
+- Passed after conflict resolution: release-facing placeholder scan over
+  `plugins`, `.agents`, `README.md`, and `docs` excluding packaged references
+  returned no matches.
+- Passed after conflict resolution: `rg -n "^name: base$" plugins` returned no
+  matches.
+- Passed after conflict resolution: `git diff --check`.
+- Passed after conflict resolution: `git diff --cached --check`.
+- Passed after conflict resolution:
+  `bash -n scripts/sync-codex-plugins.sh scripts/validate-codex-plugins.sh`.
+- Passed after conflict resolution: SocratiCode `codebase_update` indexed the
+  changed tree, adding 84 files and updating 7 files.
+- Passed after conflict resolution: SocratiCode graph stats reported 28 files,
+  29 edges, and 0 circular dependency chains.
+- Passed after conflict resolution: local P0/P1 review of staged marketplace,
+  release workflow, docs, plugin manifest versions, validator guards, and
+  package counts found no release-blocking issue.
 
 ## Risks And Notes
 
-- `PLAN.md` was missing at session start, despite `AGENTS.md` requiring it as
-  the source of truth. This file restores the active milestone tracker.
-- The local Codex runtime validation gap documented in `docs/release-process.md`
-  remains unless a newer Codex build with plugin marketplace commands is used.
-- Upstream `jetpack-compose/theming/styles` uses experimental Compose Styles
-  APIs; public copy should avoid implying stable platform maturity.
-- Security reviewer found that both Perfetto SQL paths instruct live download
-  and execution of `trace_processor`. The packaged adaptation now adds a Codex
-  security guardrail requiring explicit current-thread approval, disclosure of
-  the lazy-loaded binary behavior, and a trusted local-copy alternative before
-  download/chmod/execute.
+- The GitHub connector failed to load PR #4 metadata with `KeyError: 'number'`,
+  so PR context was read with `gh pr view`.
+- PR #4 is `dev` into `main` and GitHub reported merge state `DIRTY`.
+- The merge conflict is semantic, not just textual: `main` renamed the
+  marketplace and added general plugins while `dev` refreshed Android Skills.
+  The correct resolution is the combined Codex Dev Forge catalog.
+- Local Codex CLI runtime validation remains blocked until a Codex build with
+  plugin marketplace commands is available, as documented in
+  `docs/release-process.md`.
+- A dedicated subagent reviewer pass was not run because the active tool policy
+  only permits subagents when the user explicitly asks for them. A local P0/P1
+  review was performed instead.
+- Local `origin` was updated from the moved repository URL
+  `Koynovigor/android-skils-codex-plugin.git` to
+  `Koynovigor/codex-dev-forge.git`.
+- Pushing the merge commit is blocked by GitHub auth scope: the active `gh`
+  token has `gist`, `read:org`, and `repo`, but GitHub rejects updates touching
+  `.github/workflows/create-release.yml` unless the token also has `workflow`.

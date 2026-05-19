@@ -1,0 +1,47 @@
+{
+  "name": "adverse-review",
+  "version": "0.1.0",
+  "description": "Adversarial multi-perspective code review for Codex using three focused reviewer lenses and deterministic Node.js synthesis.",
+  "author": {
+    "name": "Addy Osmani",
+    "url": "https://github.com/addyosmani"
+  },
+  "homepage": "https://github.com/addyosmani/adverse",
+  "repository": "https://github.com/Koynovigor/android-skils-codex-plugin/tree/main/plugins/adverse-review",
+  "license": "MIT",
+  "keywords": [
+    "adverse",
+    "codex",
+    "code-review",
+    "adversarial-review",
+    "multi-agent",
+    "security-review",
+    "subagents",
+    "software-development"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Adverse Review",
+    "shortDescription": "Adversarial panel review for non-trivial code changes",
+    "longDescription": "Use Adverse Review when Codex needs a strict multi-perspective review before merge, release, or security-sensitive changes. The plugin adapts the upstream adverse reviewer panel for Codex: Auditor checks correctness, Adversary checks security and abuse paths, Pragmatist checks maintainability and design fit, and deterministic Node.js synthesis ranks findings without a fourth LLM judge.",
+    "developerName": "Addy Osmani / Koynovigor packaging",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/addyosmani/adverse",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "defaultPrompt": [
+      "Run an adverse review of my uncommitted changes.",
+      "Review this branch against main from correctness, security, and maintainability angles.",
+      "Run a critical-vulnerability adverse review before release."
+    ],
+    "brandColor": "#E11D48",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

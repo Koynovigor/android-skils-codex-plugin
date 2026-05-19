@@ -1,0 +1,48 @@
+{
+  "name": "agent-skills",
+  "version": "0.1.0",
+  "description": "Production-grade engineering workflow skills for Codex, covering the full development lifecycle from idea refinement to launch.",
+  "author": {
+    "name": "Addy Osmani",
+    "url": "https://github.com/addyosmani"
+  },
+  "homepage": "https://github.com/addyosmani/agent-skills",
+  "repository": "https://github.com/Koynovigor/android-skils-codex-plugin/tree/main/plugins/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "codex",
+    "software-development",
+    "spec-driven-development",
+    "test-driven-development",
+    "code-review",
+    "security",
+    "performance",
+    "shipping"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Skills",
+    "shortDescription": "Lifecycle engineering workflows for Codex agents",
+    "longDescription": "Use Agent Skills to guide Codex through idea refinement, specification, planning, incremental implementation, TDD, debugging, source-grounded development, code review, security hardening, performance optimization, documentation, Git workflow, CI/CD, and launch readiness. This plugin adapts the upstream agent-skills methodology for Codex while preserving the bundled skill references and specialist review personas.",
+    "developerName": "Addy Osmani / Koynovigor packaging",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/addyosmani/agent-skills",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "defaultPrompt": [
+      "Turn this feature idea into a spec and plan.",
+      "Review this change across code, tests, and security.",
+      "Prepare this project for a safe launch."
+    ],
+    "brandColor": "#7C3AED",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

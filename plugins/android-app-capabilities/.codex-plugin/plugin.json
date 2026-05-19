@@ -1,6 +1,6 @@
 {
   "name": "android-app-capabilities",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "Android app capability integrations for AppFunctions, verified email, and Play Engage SDK workflows for Codex.",
   "author": {
     "name": "Koynovigor",

@@ -1,6 +1,6 @@
 {
   "name": "android-build-and-release",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "Android build, test, release, billing, R8 optimization, and Perfetto profiling workflows for Codex.",
   "author": {
     "name": "Koynovigor",

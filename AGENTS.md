@@ -2,13 +2,13 @@
 
 ## Scope
 
-This is the durable repo-level rule set for the Android Skills Codex marketplace project.
+This is the durable repo-level rule set for the Codex Dev Forge marketplace project.
 
 Keep this file short and reusable. Put task-specific detail, milestone sequencing, current status,
 and release decisions in `PLAN.md`.
 
-This repository packages Android Skills as Codex plugins and a Codex marketplace. It is not an
-Android application project.
+This repository packages Android and general software-development skills as Codex plugins and a
+Codex marketplace. It is not an Android application project.
 
 ## Source Of Truth
 
@@ -69,9 +69,20 @@ Android application project.
   cleanup these are the repository source of truth.
 - Keep the marketplace split from `PLAN.md` unless the plan is deliberately revised:
   `android-cli-tools`, `android-app-capabilities`, `android-build-and-release`,
-  `android-ui-migration`, and `android-xr-glimmer`.
+  `android-ui-migration`, `android-xr-glimmer`, `agent-skills`, and
+  `adverse-review`.
 - Packaged skills under `plugins/*/skills/` must preserve their `references/` directories and
   relative links.
+- The `agent-skills` plugin is packaged from `../agent-skills` and must preserve upstream MIT
+  licensing, shared `references/`, and persona files under `agents/`.
+- The `adverse-review` plugin is packaged from `../adverse` and must preserve upstream MIT
+  licensing, the Node CLI core under `bin/` and `src/`, and the `adverse-review` skill scripts
+  and persona prompts.
+- Do not install upstream Claude/Gemini command files or upstream hooks as active Codex commands or
+  hooks unless `PLAN.md` explicitly adds a milestone for Codex-supported command or hook surfaces.
+- Do not reintroduce upstream Claude Code-only `adverse-review` orchestration as active Codex
+  behavior; adapt it through Codex skill instructions, Codex subagent guidance, and CLI fallback
+  documentation.
 - The upstream Android CLI skill has used paths such as `android-cli/base` and
   `devtools/android-cli`; the packaged skill must stay named `android-cli-base`.
 - During migration, treat packaged skill copies as distribution output generated from the legacy
@@ -90,11 +101,20 @@ Android application project.
 
 - The main agent owns architecture decisions, the critical path, final validation, every
   `PLAN.md` update, and milestone handoff.
-- Use subagents only when the active platform, tool instructions, and user instructions permit
-  them. If the active tool policy requires explicit user permission before spawning subagents, get
-  that permission first.
-- When permitted, use subagents for bounded read-only analysis, parallel context gathering, and
-  final P0/P1 reviewer passes.
+- Use subagents when the active platform, tool instructions, user instructions, this repo guidance,
+  or an active skill makes them useful for the task. Do not require a fresh user request for every
+  subagent pass. If the active tool policy requires explicit user permission before spawning
+  subagents, get that permission first and record the limitation in `PLAN.md` or the handoff.
+- When permitted, use subagents for bounded read-only analysis, parallel context gathering,
+  specialist review, and final P0/P1 reviewer passes.
+- After any large implementation, cross-module change, release workflow change, marketplace
+  packaging change, migration, or launch/release milestone, run a read-only `security-auditor`
+  critical-vulnerability review before yielding, even when the change does not look
+  security-focused at first glance. Also run at least one P0/P1 reviewer pass for correctness,
+  release-safety, privacy, and integration risk.
+- For authentication, authorization, secrets, payments, permissions, networking, dependency,
+  supply-chain, release, user-data, or untrusted-input surfaces, treat the `security-auditor`
+  pass as mandatory regardless of task size.
 - Do not delegate the immediate blocking next step on the critical path. First identify what the
   main agent must do locally, then delegate independent side work that can run in parallel.
 - Delegate code or docs changes only when the ownership boundary is explicit and the delegated
@@ -145,7 +165,7 @@ Run commands from the repository root.
   - `find plugins -name SKILL.md | wc -l`
 - Check packaged references:
   - `find plugins -path '*/references/*' -type f | wc -l`
-- Check legacy root layout is absent before release:
+- Check legacy Android root layout is absent before release:
   - `for skill_root in android-cli build camera device-ai devtools identity jetpack-compose navigation performance play profilers system testing xr; do test ! -e "$skill_root" || { echo "Legacy root path still exists: $skill_root"; exit 1; }; done`
 - Check for release-facing placeholders:
   - `rg -n "TODO|TBD|FIXME" plugins .agents README.md docs -g '!plugins/**/references/**' || true`
